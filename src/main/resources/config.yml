@@ -1,0 +1,21 @@
+prefix:
+  #Use %arrow% for »
+  #Use & for colors, you also don't need spaces.
+  rules: '&8[ &4Rules &8] »&7'
+  scenario: '&8[ &4Scenario &8] »&7'
+  main: '&8[ &4UHC &8] »&7'
+  border: '&8[ &4Border &8] »&7'
+  error: '&8[ &cError &8] »&7'
+  staff: '&8[ &4Staff &8] »&7'
+  team: '&8[ &4Team &8] »&7'
+  death: '&8[ &4Death &8] »&7'
+  pvp: '&8[ &4PvP &8] »&7'
+
+twitter:
+  token: '1224195613811601408-BarvuEcIX6DZL8uMKF1CZSVJEq8izA'
+  sercet: 'OFbMOSsrbQ4Lkj4yyxSoGinUzPM8OilrNnEv65NZ2Rnqo'
+
+mongo:
+  uri: ''
+  database: 'Terra'
+  stats: 'stats'

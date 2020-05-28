@@ -1,0 +1,8 @@
+name: uhc
+version: 0.01-REL-CHANNEL-1
+main: gg.scenarios.terra.Terra
+commands:
+  setmatch:
+  uhc:
+  config:
+  whitelist:
