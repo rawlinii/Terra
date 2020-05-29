@@ -80,6 +80,7 @@ public class WhiteListCommand implements CommandExecutor {
     }
 
     public static String insertDashUUID(String uuid) {
+        System.out.println(uuid);
         StringBuilder sb = new StringBuilder(uuid);
         sb.insert(8, "-");
         sb = new StringBuilder(sb.toString());

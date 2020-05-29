@@ -23,14 +23,19 @@ public class ScenarioManager {
         scenarios.add(new Barebones());
         scenarios.add(new Bats());
         scenarios.add(new HasteyBoys());
+        scenarios.add(new TimeBomb());
         scenarios.add(new CutClean());
+        scenarios.add(new Bombers());
+        scenarios.add(new GoldenRetriever());
+        scenarios.add(new Timber());
+
     }
 
 
     public List<Scenario> getEnabledScenarios(){
-        List<Scenario> tempscenarios = new ArrayList<>();
-        scenarios.stream().filter(Scenario::isEnabled).forEach(tempscenarios::add);
-        return tempscenarios;
+        List<Scenario> tempScenarios = new ArrayList<>();
+        scenarios.stream().filter(Scenario::isEnabled).forEach(tempScenarios::add);
+        return tempScenarios;
     }
 
     public Scenario getScenarioByName(String name) {

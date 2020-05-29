@@ -1,12 +1,17 @@
 package gg.scenarios.terra.managers;
 
 import gg.scenarios.terra.Terra;
+import gg.scenarios.terra.managers.profiles.PlayerState;
 import gg.scenarios.terra.managers.profiles.UHCPlayer;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.util.*;
+import java.util.logging.Level;
 
 @Getter
 @Setter
@@ -16,7 +21,7 @@ public class GameManager {
 
     private String matchPost = null;
     private Random random = new Random();
-
+    private Matchpost match;
     private List<Chunk> whitelistedChunks = new ArrayList<>();
     public Location[] scatterLocations = new Location[150];
 
@@ -29,7 +34,7 @@ public class GameManager {
     public List<UHCPlayer> slaves = new ArrayList<>();
     private List<UUID> whitelist = new ArrayList<>();
     private List<UUID> mods = new ArrayList<>();
-    private List<UUID> hosts = new ArrayList<>();
+    public List<UUID> hosts = new ArrayList<>();
     private boolean pvp = false;
     private boolean donatorWhitelistEnabled = true;
     private boolean whitelistEnabled = true;
@@ -48,7 +53,8 @@ public class GameManager {
     private boolean notch = false;
     private boolean shears = true;
     private int whitelistOffTime = 0;
-    private long scatterTimeLeft;
+    private int scatterTimeLeft = 60;
+
     public GameManager(Terra terra) {
         this.terra = terra;
 
@@ -147,11 +153,130 @@ public class GameManager {
         return whitelistOffTime;
     }
 
-    public long getScatterTimeLeft() {
-        return scatterTimeLeft;
+    public Location shrink(Player player, int radius) {
+        Location loc = player.getLocation();
+        //900 750
+        int x = (int) loc.getX(), z = (int) loc.getZ();
+        if (loc.getX() > radius) {
+            int diff = (int) loc.getX() - radius;
+            x = (int) loc.getX() - diff - 4;
+        } else if (loc.getX() < -radius) {
+            int diff = (int) loc.getX() + radius;
+            //  / x = (int) loc.getX() + diff + 4;
+            x = (int) loc.getX() + (-diff) + 4;
+        }
+        if (loc.getZ() > radius) {
+            int diff = (int) loc.getZ() - radius;
+            z = (int) loc.getZ() - diff - 4;
+        } else if (loc.getZ() < -radius) {
+            int diff = (int) loc.getZ() + radius;
+            z = (int) loc.getZ() + (-diff) + 4;
+            // -1000 +-249
+        }
+
+        return Bukkit.getWorld("uhc").getHighestBlockAt(x, z).getLocation();
     }
 
-    public void setScatterTimeLeft(long scatterTimeLeft) {
-        this.scatterTimeLeft = (int) scatterTimeLeft;
+    private int times = 0;
+
+    public Location getLocation() {
+        World uhc = Bukkit.getWorld("uhc");
+        int z = random.nextInt(getBorderRadius() + 1 - (getBorderRadius() * -1)) + (getBorderRadius() * -1);
+        int x = random.nextInt(getBorderRadius() + 1 - (getBorderRadius() * -1)) + (getBorderRadius() * -1);
+        Location location = new Location(uhc, x, uhc.getHighestBlockYAt(x, z), z);
+        if (location.getBlock().getRelative(BlockFace.DOWN).getType() != Material.WATER &&
+                location.getBlock().getRelative(BlockFace.DOWN).getType() != Material.STATIONARY_WATER &&
+                location.getBlock().getRelative(BlockFace.DOWN).getType() != Material.LAVA &&
+                location.getBlock().getRelative(BlockFace.DOWN).getType() != Material.STATIONARY_LAVA &&
+                location.getBlock().getRelative(BlockFace.DOWN).getType() != Material.CACTUS) {
+            times = 0;
+            return location.add(0, 5, 0);
+        }
+        if (times == 10) {
+            location.getBlock().setType(Material.GRASS);
+            Bukkit.getLogger().log(Level.INFO, "Failed to get a location after 10 attempts, this location will look fake");
+            times = 0;
+            return location.add(0, 5, 0);
+        }
+        times++;
+        return getLocation();
     }
+
+    private HashMap<Team, Location> teamRandomScatterLoc = new HashMap<>();
+
+    public void updateBorder(int radius) {
+        World world = Bukkit.getWorld("uhc");
+
+        if (radius == 500 || radius == 250 || radius == 100 || radius == 50 || radius == 750) {
+            borderRadius = radius;
+
+            if (teamState == TeamState.SOLO) {
+                for (Player p : Bukkit.getWorld("uhc").getPlayers()) {
+                    UHCPlayer uhcPlayer = UHCPlayer.getByUUID(p.getUniqueId());
+                    if (uhcPlayer.getPlayerState() == PlayerState.INGAME) {
+                        Location location = p.getLocation();
+                        if (Math.abs(location.getX()) > radius || Math.abs(location.getZ()) > radius) {
+                            if (radius == 750) {
+                                shrink(p, 750);
+                                p.teleport(shrink(p, 750));
+
+                            } else {
+                                Location location1 = getLocation();
+                                p.teleport(world.getHighestBlockAt(location1.getBlockX(), location1.getBlockZ()).getLocation());
+
+                            }
+                            p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+
+                        }
+                    }
+                }
+                world.getWorldBorder().setSize(borderRadius * 2, 2);
+            } else {
+                for (Player p : Bukkit.getWorld("uhc").getPlayers()) {
+                    UHCPlayer uhcPlayer = UHCPlayer.getByUUID(p.getUniqueId());
+                    if (uhcPlayer.getPlayerState() == PlayerState.INGAME) {
+                        Location location = p.getLocation();
+                        if (Math.abs(location.getX()) > radius || Math.abs(location.getZ()) > radius) {
+                            p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+
+                            if (teamRandomScatterLoc.containsKey(terra.getTeams().getTeam(p))) {
+                                Location location1 = teamRandomScatterLoc.get(terra.getTeams().getTeam(p));
+                                p.teleport(world.getHighestBlockAt(location1.getBlockX(), location1.getBlockZ()).getLocation());
+
+                            } else {
+                                if (radius == 750) {
+                                    shrink(p, 750);
+                                    p.teleport(shrink(p, 750));
+                                } else {
+                                    Location location1 = getLocation();
+                                    p.teleport(world.getHighestBlockAt(location1.getBlockX(), location1.getBlockZ()).getLocation());
+                                    p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+
+                                    teamRandomScatterLoc.put(terra.getTeams().getTeam(p), location1);
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+                world.getWorldBorder().setSize(borderRadius * 2, 2);
+            }
+        }
+        teamRandomScatterLoc.clear();
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "worldborder set " + radius * radius);
+        if (radius == 500) {
+            if (isNether()) {
+                if (Bukkit.getWorld("uhc_nether") != null) {
+                    if (Bukkit.getWorld("uhc_nether").getPlayers().size() != 0) {
+                        for (Player p : Bukkit.getWorld("uhc_nether").getPlayers()) {
+                            Location location1 = getLocation();
+                            p.teleport(world.getHighestBlockAt(location1.getBlockX(), location1.getBlockZ()).getLocation());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -185,16 +185,16 @@ public class PlayerListener implements Listener {
     }
 
 
-/*    @EventHandler
+    @EventHandler
     public void onPlayerKill(PlayerDeathEvent event) {
         if (event.getEntity().getKiller() == null) {
-            terra().setScore("§a§lPvE", uhc.getGameboard().getScore("§a§lPvE") + 1);
+            terra.getGameboard().setScore("§a§lPvE", terra.getGameboard().getScore("§a§lPvE") + 1);
             return;
         }
         Player killer = event.getEntity().getKiller();
 
-        uhc.getGameboard().setScore(killer.getName(), uhc.getGameboard().getScore(killer.getName()) + 1);
-    }*/
+        terra.getGameboard().setScore(killer.getName(), terra.getGameboard().getScore(killer.getName()) + 1);
+    }
 
     private double getRandomValue(final Random random,
                                   final int lowerBound,

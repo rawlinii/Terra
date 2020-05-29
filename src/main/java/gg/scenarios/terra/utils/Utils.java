@@ -163,6 +163,8 @@ public class Utils {
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " fill confirm");
             }
         }.runTaskLater(terra, 15 * 20L);
+        world.getWorldBorder().setCenter(0, 0);
+        world.getWorldBorder().setSize(1000 * 2);
     }
 
     public void unloadWorld(World world) {

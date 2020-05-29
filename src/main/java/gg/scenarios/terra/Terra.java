@@ -1,15 +1,13 @@
 package gg.scenarios.terra;
 
 
-import gg.scenarios.terra.commands.ConfigCommand;
-import gg.scenarios.terra.commands.SetMatchCommand;
-import gg.scenarios.terra.commands.UHCCommand;
-import gg.scenarios.terra.commands.WhiteListCommand;
+import gg.scenarios.terra.commands.*;
 import gg.scenarios.terra.listeners.LobbyListener;
 import gg.scenarios.terra.listeners.PlayerListener;
 import gg.scenarios.terra.listeners.ScenarioInventoryEvent;
 import gg.scenarios.terra.listeners.SpecListener;
 import gg.scenarios.terra.managers.GameManager;
+import gg.scenarios.terra.managers.Gameboard;
 import gg.scenarios.terra.managers.Reference;
 import gg.scenarios.terra.nms.NMS;
 import gg.scenarios.terra.nms.verisons.v1_8_R3;
@@ -17,14 +15,19 @@ import gg.scenarios.terra.scenarios.ScenarioManager;
 import gg.scenarios.terra.teams.Teams;
 import gg.scenarios.terra.utils.Utils;
 import gg.scenarios.terra.world.BiomeSwap;
+import gg.scenarios.terra.world.IncreasedCaneRates;
+import gg.scenarios.terra.world.OrePopulator;
 import lombok.Getter;
 import org.bukkit.*;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
+import redis.clients.jedis.JedisPool;
 
 import java.util.Arrays;
 
@@ -44,6 +47,11 @@ public class Terra extends JavaPlugin implements Listener {
     private Teams teams;
     @Getter
     public ScenarioManager scenarioManager;
+    @Getter
+    private Gameboard gameboard;
+
+    public static JedisPool pool;
+
 
     @Override
     public void onEnable(){
@@ -52,8 +60,10 @@ public class Terra extends JavaPlugin implements Listener {
         saveConfig();
         reloadConfig();
         utils = new Utils(this);
-        new BiomeSwap().startWorldGen();
         createWorld();
+        new BiomeSwap().startWorldGen();
+        World world = Bukkit.getWorld("uhc");
+        utils.loadWorld(world, 1000, 10);
         reference = new Reference(this);
         gameManager = new GameManager(this);
         teams = new Teams();
@@ -70,10 +80,20 @@ public class Terra extends JavaPlugin implements Listener {
         regCommands();
         regListeners();
         utils.setMOTD(ChatColor.translateAlternateColorCodes('&', "       &8&l - / / &4&lScenarios&e&lUHC &7(&a1.8.X)&8&l \\ \\ -                 &7@ScenariosUHC "));
-
-
+        gameboard = new Gameboard();
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            joinable = true;
+        }, 20 * 30L);
     }
 
+    private boolean joinable = false;
+
+    @EventHandler
+    public void onjoin(PlayerLoginEvent event) {
+        if (!joinable) {
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, "UHC SERVER IS STILL BEING SETUP");
+        }
+    }
     private void regListeners() {
         getServer().getPluginManager().registerEvents(new SpecListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
@@ -84,8 +104,10 @@ public class Terra extends JavaPlugin implements Listener {
 
     public void createWorld() {
         World uhc = Bukkit.createWorld(new WorldCreator("uhc").environment(World.Environment.NORMAL).type(WorldType.NORMAL));
-        uhc.setGameRuleValue("doDaylightCycle", "false");
+        uhc.setGameRuleValue("doDaylightCycle", "true");
         uhc.setTime(0);
+        uhc.getPopulators().add(new IncreasedCaneRates());
+        uhc.getPopulators().add(new OrePopulator());
         uhc.setGameRuleValue("naturalRegeneration", "false");
         uhc.setPVP(false);
 
@@ -120,5 +142,10 @@ public class Terra extends JavaPlugin implements Listener {
         getCommand("uhc").setExecutor(new UHCCommand());
         getCommand("whitelist").setExecutor(new WhiteListCommand());
         getCommand("config").setExecutor(new ConfigCommand());
+        getCommand("helpop").setExecutor(new HelpopCommand());
+        getCommand("rhelpop").setExecutor(new rHelpopCommand());
+        getCommand("team").setExecutor(new TeamCommand());
+        getCommand("scenarios").setExecutor(new ScenariosCommand());
+        getCommand("heal").setExecutor(new HealCommand());
     }
 }

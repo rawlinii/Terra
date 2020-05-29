@@ -5,6 +5,7 @@ import gg.scenarios.terra.tasks.WhitelistOff;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
+import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.Team;
@@ -20,14 +21,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Getter
 public class Matchpost {
 
     private String[] matchPost;
     private List<Object> scenarios;
     private Terra terra = Terra.getInstance();
+    ZonedDateTime matchTime;
 
     public Matchpost(String matchPost) {
         terra.getGameManager().setMatchPost(matchPost);
+        terra.getGameManager().setMatch(this);
         this.matchPost = matchPost.split("/");
         this.scenarios = new ArrayList<>();
         terra.getServer().broadcastMessage(ChatColor.GREEN + "Loading settings from matchpost, server might lag");
@@ -51,7 +55,7 @@ public class Matchpost {
 
         String dateTime = response.getBody().getObject().getString("opens");
         ZonedDateTime serverTime = ZonedDateTime.now(ZoneId.of("UTC"));
-        ZonedDateTime matchTime = ZonedDateTime.of(LocalDateTime.parse(dateTime
+         matchTime = ZonedDateTime.of(LocalDateTime.parse(dateTime
                 .replace("Z", "").trim()), ZoneId.of("UTC"));
 
         Long diff = ChronoUnit.SECONDS.between(serverTime, matchTime);

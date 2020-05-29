@@ -1,8 +1,15 @@
-name: uhc
-version: 0.01-REL-CHANNEL-1
+name: terra
+version: 1-release
 main: gg.scenarios.terra.Terra
 commands:
   setmatch:
   uhc:
   config:
   whitelist:
+    aliases: [wl]
+  helpop:
+  rhelpop:
+  team:
+  scenarios:
+    aliases: [scen, explain]
+  heal:

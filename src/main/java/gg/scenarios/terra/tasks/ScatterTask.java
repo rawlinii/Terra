@@ -90,6 +90,7 @@ public class ScatterTask {
             try {
                 if (players.isEmpty()) {
                     System.out.println("stopping");
+                    new GameStartTask();
                     stopScheduler();
                     return;
                 }
