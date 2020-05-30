@@ -50,6 +50,7 @@ public class Matchpost {
         }
 
         terra.getGameManager().setBorderTime(response.getBody().getObject().getInt("length") - 15);
+        terra.getGameManager().setMeetupTime(response.getBody().getObject().getInt("length"));
 
         scenarios =  response.getBody().getObject().getJSONArray("scenarios").toList();
 

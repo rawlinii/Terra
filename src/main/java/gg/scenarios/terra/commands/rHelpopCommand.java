@@ -30,10 +30,10 @@ public class rHelpopCommand implements CommandExecutor {
                 Player target = Bukkit.getPlayer(args[0]);
 
                 StringBuilder message = new StringBuilder();
-                for (int i = 0; i < args.length; i++) {
+                for (int i = 1; i < args.length; i++) {
                     message.append(args[i]).append(" ");
                 }
-                target.sendMessage(ChatColor.GRAY + "Helpop reply from: " +ChatColor.DARK_RED + sender.getName() + ChatColor.DARK_GRAY +":" + ChatColor.GRAY + message);
+                target.sendMessage(ChatColor.GRAY + "Helpop reply from: " +ChatColor.DARK_RED + sender.getName() + ChatColor.DARK_GRAY +": " + ChatColor.GRAY + message);
             }
         }
         return false;

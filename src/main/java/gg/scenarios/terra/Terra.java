@@ -60,8 +60,8 @@ public class Terra extends JavaPlugin implements Listener {
         saveConfig();
         reloadConfig();
         utils = new Utils(this);
-        createWorld();
         new BiomeSwap().startWorldGen();
+        createWorld();
         World world = Bukkit.getWorld("uhc");
         utils.loadWorld(world, 1000, 10);
         reference = new Reference(this);
@@ -89,7 +89,7 @@ public class Terra extends JavaPlugin implements Listener {
     private boolean joinable = false;
 
     @EventHandler
-    public void onjoin(PlayerLoginEvent event) {
+    public void onJoin(PlayerLoginEvent event) {
         if (!joinable) {
             event.disallow(PlayerLoginEvent.Result.KICK_FULL, "UHC SERVER IS STILL BEING SETUP");
         }

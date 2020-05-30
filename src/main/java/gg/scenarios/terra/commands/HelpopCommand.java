@@ -38,7 +38,7 @@ public class HelpopCommand implements CommandExecutor {
                 for (UUID uuid : terra.getGameManager().getMods()) {
                     Player mod = Bukkit.getPlayer(uuid);
                     if (mod != null) {
-                        TextComponent msg = new TextComponent( ChatColor.DARK_GRAY + "[" + ChatColor.BOLD +" " + ChatColor.DARK_RED +"Helpop #" + helpOp +ChatColor.DARK_GRAY +"] " + ChatColor.WHITE +player.getName() + ChatColor.GOLD + " - " +ChatColor.GRAY + message);
+                        TextComponent msg = new TextComponent( ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED +" " + ChatColor.BOLD +"Helpop #" + helpOp +ChatColor.DARK_GRAY +"] " + ChatColor.WHITE +player.getName() + ChatColor.GOLD + " - " +ChatColor.GRAY + message);
                         msg.setClickEvent( new ClickEvent( ClickEvent.Action.SUGGEST_COMMAND, "/rhelpop " + player.getName() + " " ) );
                         msg.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( "Click to reply to this helpop!" ).create()));
                         mod.spigot().sendMessage(msg);
