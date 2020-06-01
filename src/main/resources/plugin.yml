@@ -13,3 +13,5 @@ commands:
   scenarios:
     aliases: [scen, explain]
   heal:
+  coords:
+    aliases: [pmc, sendcoords]

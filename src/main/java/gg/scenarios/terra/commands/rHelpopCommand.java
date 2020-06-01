@@ -1,5 +1,6 @@
 package gg.scenarios.terra.commands;
 
+import gg.scenarios.terra.Terra;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -34,6 +35,13 @@ public class rHelpopCommand implements CommandExecutor {
                     message.append(args[i]).append(" ");
                 }
                 target.sendMessage(ChatColor.GRAY + "Helpop reply from: " +ChatColor.DARK_RED + sender.getName() + ChatColor.DARK_GRAY +": " + ChatColor.GRAY + message);
+
+                for (UUID uuid : Terra.getInstance().getGameManager().getMods()) {
+                    Player mod = Bukkit.getPlayer(uuid);
+                    if (mod != null) {
+                        mod.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "([" + sender.getName() + "]: /" + cmd.getName() + " " + target.getName() + " " + message + ")");
+                    }
+                }
             }
         }
         return false;

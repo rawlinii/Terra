@@ -27,7 +27,15 @@ public class ScenarioManager {
         scenarios.add(new CutClean());
         scenarios.add(new Bombers());
         scenarios.add(new GoldenRetriever());
+        scenarios.add(new Siphon());
+        scenarios.add(new WebCage());
         scenarios.add(new Timber());
+        scenarios.add(new VeinMiner());
+        scenarios.add(new Bowless());
+        scenarios.add(new EnchantedDeath());
+        scenarios.add(new InfiniteEnchanter());
+        scenarios.add(new SpeedShot());
+        scenarios.add(new BleedingSweets());
 
     }
 

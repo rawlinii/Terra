@@ -4,11 +4,15 @@ import com.google.gson.internal.$Gson$Preconditions;
 import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.managers.GameManager;
 import gg.scenarios.terra.managers.GameState;
+import gg.scenarios.terra.managers.Reference;
 import gg.scenarios.terra.managers.TeamState;
 import gg.scenarios.terra.managers.profiles.Logger;
 import gg.scenarios.terra.managers.profiles.PlayerState;
 import gg.scenarios.terra.managers.profiles.UHCPlayer;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Skull;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,10 +34,12 @@ public class PlayerListener implements Listener {
 
     private Terra terra;
     private GameManager gameManager;
+    private Reference reference;
 
     public PlayerListener(Terra terra) {
         this.terra = terra;
         gameManager = terra.getGameManager();
+        reference = terra.getReference();
     }
 
     @EventHandler
@@ -285,6 +291,14 @@ public class PlayerListener implements Listener {
         }
     }
 
+
+    @EventHandler
+    public void damage(EntityDamageEvent event) {
+        if (gameManager.getGameState().equals(GameState.SCATTERING)) {
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
       /*  for (UUID uuid : uhc.getMods()) {
@@ -380,8 +394,20 @@ public class PlayerListener implements Listener {
     }
 
 
+
     @EventHandler
-    public void onTele(PlayerTeleportEvent event) {
+    public void noBurn(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Zombie) {
+            if (event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.FIRE) {
+                if (event.getEntity().getCustomName() != null) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (!gameManager.getMods().contains(online.getUniqueId())) {
@@ -391,6 +417,69 @@ public class PlayerListener implements Listener {
             }
         }
     }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onKill(EntityDeathEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
+        if (player.getKiller() instanceof Player) {
+            Player p = (Player) event.getEntity();
+            Player target = player.getKiller();
+            terra.getUtils().broadcast(reference.secColor + player.getName() + reference.primColor + " was slain by " + reference.secColor + target.getName());
+            UHCPlayer uhcPlayer = UHCPlayer.getByName(player.getName());
+            uhcPlayer.setDeathLocation(player.getLocation());
+            uhcPlayer.setInventory(player.getInventory().getContents());
+            uhcPlayer.setArmor(player.getInventory().getArmorContents());
+            uhcPlayer.setPlayerState(PlayerState.DEAD);
+            uhcPlayer.setLevels(player.getLevel());
+            uhcPlayer.getStatistics().getDeaths().increment();
+            UHCPlayer targetp = UHCPlayer.getByName(target.getName());
+            targetp.getStatistics().getKills().increment();
+            gameManager.getPlayers().remove(uhcPlayer);
+            if (!terra.getScenarioManager().getScenarioByName("Timebomb").isEnabled() || !terra.getScenarioManager().getScenarioByName("Golden Retriever").isEnabled()) {
+                player.getWorld().getBlockAt(player.getLocation()).setType(Material.NETHER_FENCE);
+                player.getWorld().getBlockAt(player.getLocation().add(0.0, 1.0, 0.0)).setType(Material.SKULL);
+                final Block b = player.getWorld().getBlockAt(player.getLocation().add(0.0, 1.0, 0.0));
+                b.setData((byte) 1);
+                final BlockState state = player.getWorld().getBlockAt(player.getLocation().add(0.0, 1.0, 0.0)).getState();
+                if (state instanceof Skull) {
+                    final Skull skull = (Skull) state;
+                    skull.setSkullType(SkullType.PLAYER);
+                    skull.setOwner(player.getName());
+                    skull.update();
+
+                }
+            }
+            terra.getUtils().kickPlayer(player);
+        } else {
+
+            UHCPlayer uhcPlayer = UHCPlayer.getByName(player.getName());
+            uhcPlayer.setDeathLocation(player.getLocation());
+            uhcPlayer.setInventory(player.getInventory().getContents());
+            uhcPlayer.setArmor(player.getInventory().getArmorContents());
+            uhcPlayer.setPlayerState(PlayerState.DEAD);
+            uhcPlayer.setLevels(player.getLevel());
+            uhcPlayer.getStatistics().getDeaths().increment();
+            terra.getGameManager().getPlayers().remove(uhcPlayer);
+            terra.getUtils().broadcast(reference.secColor + player.getName() + reference.primColor + " was killed ");
+            if (!terra.getScenarioManager().getScenarioByName("Timebomb").isEnabled() || !terra.getScenarioManager().getScenarioByName("Golden Retriever").isEnabled()) {
+                player.getWorld().getBlockAt(player.getLocation()).setType(Material.NETHER_FENCE);
+                player.getWorld().getBlockAt(player.getLocation().add(0.0, 1.0, 0.0)).setType(Material.SKULL);
+                final Block b = player.getWorld().getBlockAt(player.getLocation().add(0.0, 1.0, 0.0));
+                b.setData((byte) 1);
+                final BlockState state = player.getWorld().getBlockAt(player.getLocation().add(0.0, 1.0, 0.0)).getState();
+                if (state instanceof Skull) {
+                    final Skull skull = (Skull) state;
+                    skull.setSkullType(SkullType.PLAYER);
+                    skull.setOwner(player.getName());
+                    skull.update();
+
+                }
+            }
+            terra.getUtils().kickPlayer(player);
+        }
+    }
+
 
 
     public String formatDamage(double health) {

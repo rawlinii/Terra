@@ -95,21 +95,25 @@ public class ScatterTask {
                     return;
                 }
                 UHCPlayer profile = players.get(players.size() - 1);
-                assert profile.isOnline();
+                if (profile.isOnline()) {
 
-                profile.getScatter().getWorld().getChunkAt(profile.getScatter()).load();
-                profile.getPlayer().teleport(profile.getScatter());
-                main.getNms().addVehicle(profile.getPlayer());
-                Bukkit.getOnlinePlayers().forEach(player ->{
-                    HotBarMessage.sendHotBarMessage(player, ChatColor.GRAY + "Scattered " + ChatColor.DARK_GRAY + " » " + ChatColor.GREEN + profile.getPlayer().getName());
-                });
-                players.remove(profile);
+                    profile.getScatter().getWorld().getChunkAt(profile.getScatter()).load();
+                    profile.getPlayer().teleport(profile.getScatter());
+                    main.getNms().addVehicle(profile.getPlayer());
+                    Bukkit.getOnlinePlayers().forEach(player -> {
+                        HotBarMessage.sendHotBarMessage(player, ChatColor.GRAY + "Scattered " + ChatColor.DARK_GRAY + " » " + ChatColor.GREEN + profile.getPlayer().getName());
+                    });
+                    players.remove(profile);
+                }
+                else{
+                    players.remove(profile);
+                }
             } catch (ArrayIndexOutOfBoundsException e) {
 
                 stopScheduler();
                 return;
             }
-        }, 0, 6L).getTaskId();
+        }, 0, 3L).getTaskId();
     }
 
 

@@ -77,8 +77,9 @@ public class UHCCommand implements CommandExecutor {
                         uhc.getUtils().toggle(player);
                         Location location = new Location(Bukkit.getWorld("uhc"), 0, 100, 0);
                         player.teleport(location);
-
-
+                        uhc.getGameManager().getPlayers().stream().filter(UHCPlayer::isOnline).filter(UHCPlayer::isInLobby).forEach(uhcPlayer -> {
+                            uhcPlayer.getPlayer().performCommand("team create");
+                        });
                     }
                 } else if (args[0].equalsIgnoreCase("delete")) {
                     uhc.getUtils().unloadWorld(Bukkit.getWorld("uhc"));

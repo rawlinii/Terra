@@ -1,7 +1,9 @@
 package gg.scenarios.terra;
 
 
+import com.google.gson.Gson;
 import gg.scenarios.terra.commands.*;
+import gg.scenarios.terra.database.Redis;
 import gg.scenarios.terra.listeners.LobbyListener;
 import gg.scenarios.terra.listeners.PlayerListener;
 import gg.scenarios.terra.listeners.ScenarioInventoryEvent;
@@ -27,8 +29,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
-import redis.clients.jedis.JedisPool;
-
 import java.util.Arrays;
 
 public class Terra extends JavaPlugin implements Listener {
@@ -50,9 +50,11 @@ public class Terra extends JavaPlugin implements Listener {
     @Getter
     private Gameboard gameboard;
 
-    public static JedisPool pool;
+    @Getter
+    private Redis redis;
 
-
+    @Getter
+    private Gson gson;
     @Override
     public void onEnable(){
         instance = this;
@@ -60,6 +62,7 @@ public class Terra extends JavaPlugin implements Listener {
         saveConfig();
         reloadConfig();
         utils = new Utils(this);
+        gson = new Gson();
         new BiomeSwap().startWorldGen();
         createWorld();
         World world = Bukkit.getWorld("uhc");
@@ -67,6 +70,7 @@ public class Terra extends JavaPlugin implements Listener {
         reference = new Reference(this);
         gameManager = new GameManager(this);
         teams = new Teams();
+        redis = new Redis(this);
         scenarioManager = new ScenarioManager();
         for (Team team : teams.getTeams()) {
             for (OfflinePlayer p : team.getPlayers()) {
@@ -147,5 +151,6 @@ public class Terra extends JavaPlugin implements Listener {
         getCommand("team").setExecutor(new TeamCommand());
         getCommand("scenarios").setExecutor(new ScenariosCommand());
         getCommand("heal").setExecutor(new HealCommand());
+        getCommand("coords").setExecutor(new CoordsCommand());
     }
 }

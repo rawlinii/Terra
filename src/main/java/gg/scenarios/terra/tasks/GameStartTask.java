@@ -43,7 +43,7 @@ public class GameStartTask {
                 });
                 s=false;
             }
-            UHCPlayer.getPlayers().values().stream().filter(UHCPlayer::isPlaying).filter(UHCPlayer::isOnline).forEach(e ->{
+            UHCPlayer.getPlayers().values().stream().filter(UHCPlayer::isOnline).forEach(e ->{
                 try {
                     HotBarMessage.sendHotBarMessage(e.getPlayer(), reference.primColor + "Game starts »" + reference.secColor+" {0}".replace("{0}", Terra.getInstance().getUtils().convertToNice((int) gameManager.getScatterTimeLeft())));
                 } catch (Exception ex) {

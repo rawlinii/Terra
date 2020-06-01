@@ -26,6 +26,7 @@ public class GameManager {
     public Location[] scatterLocations = new Location[150];
 
     private UHCPlayer host = null;
+    private String hostingName;
     private boolean startingFall = true;
     private GameState gameState = GameState.LOBBY;
     private TeamState teamState = TeamState.SOLO;

@@ -69,9 +69,12 @@ public class PostTweet {
                 "\n" +
                 "- " + teamSize + " " +createScenarios() + "\n" +
                 "- Opens at: " + uhc.getGameManager().getMatch().getMatchTime().getHour() + ":" + uhc.getGameManager().getMatch().getMatchTime().getMinute() + " ("+ mins+"m)\n" +
-                "- Matchpost:  " + uhc.getGameManager().getMatchPost() +
+                "\n" +
+                "- Matchpost: " + uhc.getGameManager().getMatchPost() + "\n" +
+                "\n" +
                 "- IP: na.scenarios.gg\n" +
                 "- Region: NA\n" +
-                "- Host:" + host +"\n";
+                "\n" +
+                "- Host: " + host +"\n";
     }
 }

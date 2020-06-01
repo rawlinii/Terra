@@ -2,6 +2,9 @@ package gg.scenarios.terra.commands;
 
 import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.managers.profiles.UHCPlayer;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -56,18 +59,22 @@ public class WhiteListCommand implements CommandExecutor {
                             uhc.getGameManager().getWhitelist().add(uuid.getPlayer().getUniqueId());
                             count++;
                         });
+                        uhc.getGameManager().getPlayers().removeAll(uhc.getGameManager().getPlayers());
                         uhc.getGameManager().getWhitelist().forEach(uuid -> {
-                            if (UHCPlayer.getByUUID(uuid).isOnline()) {
-                                if (UHCPlayer.getByUUID(uuid).isSpectating()) {
-                                    try {
-                                        uhc.getGameManager().getPlayers().remove(UHCPlayer.getByUUID(uuid));
-                                    } catch (Exception e) {
-
-                                    }
-                                    uhc.getGameManager().getPlayers().add(UHCPlayer.getByUUID(uuid));
-                                }
-                            }
+                            uhc.getGameManager().getPlayers().add(UHCPlayer.getByUUID(uuid));
                         });
+//                        uhc.getGameManager().getWhitelist().forEach(uuid -> {
+//                            if (UHCPlayer.getByUUID(uuid).isOnline()) {
+//                                if (UHCPlayer.getByUUID(uuid).isSpectating()) {
+//                                    try {
+//                                        uhc.getGameManager().getPlayers().remove(UHCPlayer.getByUUID(uuid));
+//                                    } catch (Exception e) {
+//
+//                                    }
+//                                    uhc.getGameManager().getPlayers().add(UHCPlayer.getByUUID(uuid));
+//                                }
+//                            }
+//                        });
                         player.sendMessage(ChatColor.YELLOW + "You have added " + ChatColor.LIGHT_PURPLE + uhc.getGameManager().getPlayers().size() + ChatColor.YELLOW + " players to the whitelist");
 
                     }
@@ -80,7 +87,6 @@ public class WhiteListCommand implements CommandExecutor {
     }
 
     public static String insertDashUUID(String uuid) {
-        System.out.println(uuid);
         StringBuilder sb = new StringBuilder(uuid);
         sb.insert(8, "-");
         sb = new StringBuilder(sb.toString());
@@ -95,13 +101,11 @@ public class WhiteListCommand implements CommandExecutor {
 
     public static String getUUID(String playerName) {
         try {
-            String url = "https://api.mojang.com/users/profiles/minecraft/" + playerName;
+            HttpResponse<JsonNode> response = Unirest.get("https://api.mojang.com/users/profiles/minecraft/" + playerName)
+                    .header("accept", "application/json")
+                    .asJson();
 
-            String UUIDJson = IOUtils.toString(new URL(url));
-
-            JSONObject UUIDObject = (JSONObject) JSONValue.parseWithException(UUIDJson);
-
-            return UUIDObject.get("id").toString();
+            return response.getBody().getObject().getString("id");
         } catch (Exception e) {
             return "";
         }

@@ -34,19 +34,12 @@ public class PrepareGameTask {
                     uhcPlayer.setPlayerState(PlayerState.SCATTERING);
                 });
 
-        for (int i = 0; i < Bukkit.getOnlinePlayers().size() + 10; i++) {
-            Location location = uhc.getGameManager().findLocation();
-            uhc.getGameManager().scatterLocations[i] = location;
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                HotBarMessage.sendHotBarMessage(onlinePlayer, ChatColor.AQUA + "Loading Scatter Points... " + ChatColor.GRAY + "[" + ChatColor.RED + i + ChatColor.GRAY + "/" + ChatColor.GREEN + Bukkit.getOnlinePlayers().size() + 10 + ChatColor.GRAY + "]");
-            }
-        }
 
         gameManager.setScatterTimeLeft(60);
 
         gameManager.setGameState(GameState.SCATTERING);
 
 
-        new ScatterTask();
+        new LoadScatterPoints();
     }
 }

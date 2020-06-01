@@ -74,7 +74,54 @@ public class Utils {
 
 
 
-    public void giveItem(Player player, ItemStack... stacks){
+    public static List<Location> generateSphere(Location centerBlock, int radius, boolean hollow) {
+
+        List<Location> circleBlocks = new ArrayList<Location>();
+
+        int bx = centerBlock.getBlockX();
+        int by = centerBlock.getBlockY();
+        int bz = centerBlock.getBlockZ();
+
+        for(int x = bx - radius; x <= bx + radius; x++) {
+            for(int y = by - radius; y <= by + radius; y++) {
+                for(int z = bz - radius; z <= bz + radius; z++) {
+
+                    double distance = ((bx-x) * (bx-x) + ((bz-z) * (bz-z)) + ((by-y) * (by-y)));
+
+                    if(distance < radius * radius && !(hollow && distance < ((radius - 1) * (radius - 1)))) {
+
+                        Location l = new Location(centerBlock.getWorld(), x, y, z);
+
+                        circleBlocks.add(l);
+
+                    }
+
+                }
+            }
+        }
+
+        return circleBlocks;
+    }
+
+
+
+//    public void giveItem(Player player, ItemStack... stacks){
+//        Validate.notNull(player, "Player cannot be null.");
+//        Validate.notNull(stacks, "ItemStack cannot be null.");
+//
+//        HashMap<Integer, ItemStack> leftOvers = player.getInventory().addItem(stacks);
+//
+//        if (leftOvers.isEmpty()) {
+//            return;
+//        }
+//        player.sendMessage(ChatColor.translateAlternateColorCodes('&', terra.getReference().getMain() + "&6Item(s) were dropped on the ground!"));
+//
+//        for (ItemStack leftOver : leftOvers.values()){
+//            player.getWorld().dropItemNaturally(player.getLocation(), leftOver);
+//        }
+//
+//    }
+    public static void giveItem(Player player, ItemStack... stacks){
         Validate.notNull(player, "Player cannot be null.");
         Validate.notNull(stacks, "ItemStack cannot be null.");
 
@@ -83,7 +130,7 @@ public class Utils {
         if (leftOvers.isEmpty()) {
             return;
         }
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', terra.getReference().getMain() + "&6Item(s) were dropped on the ground!"));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Terra.getInstance().getReference().getMain() + "&6Item(s) were dropped on the ground!"));
 
         for (ItemStack leftOver : leftOvers.values()){
             player.getWorld().dropItemNaturally(player.getLocation(), leftOver);

@@ -51,7 +51,7 @@ public class Matchpost {
 
         terra.getGameManager().setBorderTime(response.getBody().getObject().getInt("length") - 15);
         terra.getGameManager().setMeetupTime(response.getBody().getObject().getInt("length"));
-
+        terra.getGameManager().setHostingName(response.getBody().getObject().getString("hostingName"));
         scenarios =  response.getBody().getObject().getJSONArray("scenarios").toList();
 
         String dateTime = response.getBody().getObject().getString("opens");

@@ -42,9 +42,10 @@ public class HelpopCommand implements CommandExecutor {
                         msg.setClickEvent( new ClickEvent( ClickEvent.Action.SUGGEST_COMMAND, "/rhelpop " + player.getName() + " " ) );
                         msg.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( "Click to reply to this helpop!" ).create()));
                         mod.spigot().sendMessage(msg);
-                        helpOp++;
+
                     }
                 }
+                helpOp++;
                 sender.sendMessage(ChatColor.YELLOW + "Your request has been sent!");
             }
         }
