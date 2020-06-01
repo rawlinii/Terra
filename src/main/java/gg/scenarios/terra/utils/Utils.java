@@ -1,6 +1,7 @@
 package gg.scenarios.terra.utils;
 
 import gg.scenarios.terra.Terra;
+import gg.scenarios.terra.tasks.PregenTask;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.DedicatedServer;
 import org.apache.commons.io.IOUtils;
@@ -204,10 +205,7 @@ public class Utils {
             @Override
             public void run() {
                 Bukkit.broadcastMessage("§bStarted loading the world " + world.getName());
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " set " + radius + " " + radius + " 0 0");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " fill 1700");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " fill confirm");
+                new PregenTask();
             }
         }.runTaskLater(terra, 15 * 20L);
         world.getWorldBorder().setCenter(0, 0);

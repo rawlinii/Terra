@@ -18,7 +18,6 @@ public class OrePopulator extends BlockPopulator {//
         int x = chunk.getX() * 16 + random.nextInt(16);
         int y = lowest + random.nextInt(highest - lowest);
         int z = chunk.getZ() * 16 + random.nextInt(16);
-        Bukkit.broadcastMessage(x + " " + y + " " + z);
         populateOre(world, random, x, y, z, 1, Material.DIAMOND_ORE);
     }
 

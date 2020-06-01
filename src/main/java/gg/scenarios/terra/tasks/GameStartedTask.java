@@ -7,6 +7,7 @@ import gg.scenarios.terra.managers.Reference;
 import gg.scenarios.terra.managers.profiles.Logger;
 import gg.scenarios.terra.managers.profiles.PlayerState;
 import gg.scenarios.terra.managers.profiles.UHCPlayer;
+import gg.scenarios.terra.scenarios.Scenario;
 import gg.scenarios.terra.utils.HotBarMessage;
 import gg.scenarios.terra.utils.Utils;
 import net.minecraft.server.v1_8_R3.WorldServer;
@@ -14,6 +15,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameStartedTask {
 
@@ -25,6 +30,18 @@ public class GameStartedTask {
     private int taskId;
     private World world = Bukkit.getWorld("uhc");
 
+    private String createScenarios(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Scenario scenario : main.getScenarioManager().getScenarios()){
+            if (scenario.isEnabled()) {
+                stringBuilder.append(scenario.getName());
+                stringBuilder.append(", ");
+            }
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 2);
+        return stringBuilder.toString();
+    }
+
     public GameStartedTask() {
         taskId =Bukkit.getScheduler().runTaskTimer(main, () -> {
 
@@ -35,6 +52,13 @@ public class GameStartedTask {
                     p.getPlayer().setSaturation(20.00f);
                 });
             }
+
+            Bukkit.getOnlinePlayers().forEach(p ->{
+                main.getNms().sendTablist(p, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC +"@ScenariosUHC \n" +
+                        ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
+                        ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n"+ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "Scenarios: " + ChatColor.GOLD +
+                        createScenarios());
+            });
 
             if(gameManager.getPvpTimeInSeconds() == gameManager.getTimer()) {
                 utils.broadcast(ChatColor.translateAlternateColorCodes('&', main.getReference().getMain()) + reference.primColor + "PVP has been" + reference.secColor + " enabled" + reference.primColor + "!");

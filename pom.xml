@@ -111,13 +111,6 @@
             <systemPath>${project.basedir}/libs/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.khorn</groupId>
-            <artifactId>terraincontrol</artifactId>
-            <version>2.7.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/TerrainControl.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>com.danwager</groupId>
             <artifactId>biomeswap</artifactId>
             <version>1.6</version>

@@ -4,6 +4,7 @@ import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.utils.HotBarMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
 public class WhitelistOn {
     int taskId;
@@ -12,6 +13,14 @@ public class WhitelistOn {
     public WhitelistOn(int diff) {
         count = diff;
         taskId = Bukkit.getServer().getScheduler().runTaskTimer(uhc, () -> {
+
+            Bukkit.getOnlinePlayers().forEach(p ->{
+                uhc.getNms().sendTablist(p, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC +"@ScenariosUHC \n" +
+                        ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
+                        ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n"+ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD + uhc.getGameManager().getMatchPost()
+                        );
+            });
+
 
             count--;
             String countDown = uhc.getUtils().convertToNice(count);

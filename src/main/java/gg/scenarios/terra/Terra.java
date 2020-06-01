@@ -109,6 +109,8 @@ public class Terra extends JavaPlugin implements Listener {
     public void createWorld() {
         World uhc = Bukkit.createWorld(new WorldCreator("uhc").environment(World.Environment.NORMAL).type(WorldType.NORMAL));
         uhc.setGameRuleValue("doDaylightCycle", "true");
+        uhc.setGameRuleValue("doMobSpawning", "false");
+
         uhc.setTime(0);
         uhc.getPopulators().add(new IncreasedCaneRates());
         uhc.getPopulators().add(new OrePopulator());

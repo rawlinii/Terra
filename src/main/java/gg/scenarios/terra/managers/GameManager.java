@@ -231,7 +231,6 @@ public class GameManager {
                         }
                     }
                 }
-                world.getWorldBorder().setSize(borderRadius * 2, 2);
             } else {
                 for (Player p : Bukkit.getWorld("uhc").getPlayers()) {
                     UHCPlayer uhcPlayer = UHCPlayer.getByUUID(p.getUniqueId());
@@ -261,8 +260,9 @@ public class GameManager {
 
                     }
                 }
-                world.getWorldBorder().setSize(borderRadius * 2, 2);
             }
+            world.getWorldBorder().setSize(borderRadius * 2, 2);
+
         }
         teamRandomScatterLoc.clear();
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "worldborder set " + radius * radius);

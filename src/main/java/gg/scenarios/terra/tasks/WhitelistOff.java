@@ -8,6 +8,7 @@ import gg.scenarios.terra.scenarios.Scenario;
 import gg.scenarios.terra.utils.HotBarMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import twitter4j.TwitterException;
 
 import java.util.ArrayList;
@@ -25,6 +26,10 @@ public class WhitelistOff {
             String countDown = uhc.getUtils().convertToNice(count);
             Bukkit.getOnlinePlayers().forEach(p ->{
                 HotBarMessage.sendHotBarMessage(p, ChatColor.GRAY + "Whitelist is off in " + ChatColor.DARK_GRAY + "» " + ChatColor.GREEN +countDown);
+                uhc.getNms().sendTablist(p, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC +"@ScenariosUHC \n" +
+                        ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
+                        ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n"+ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
+                        uhc.getGameManager().getMatchPost());
             });
 
             if (count == 900){
