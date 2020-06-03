@@ -18,8 +18,8 @@ public class Reference {
     private Terra terra;
     private FileConfiguration config;
 
-    public ChatColor primColor = ChatColor.DARK_GRAY;
-    public ChatColor secColor = ChatColor.RED;
+    public ChatColor primColor = ChatColor.GRAY;
+    public ChatColor secColor = ChatColor.GOLD;
 
 
     public String arrow = "§8»";

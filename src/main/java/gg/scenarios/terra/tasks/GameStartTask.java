@@ -66,7 +66,7 @@ public class GameStartTask {
             }
 
             if(gameManager.getScatterTimeLeft() == 0) {
-                utils.broadcast(ChatColor.translateAlternateColorCodes('&', main.getReference().getMain()) + reference.primColor + "The " + reference.secColor + "UHC" + reference.primColor + " has begun " + reference.secColor +".");
+                utils.broadcast(ChatColor.translateAlternateColorCodes('&', main.getReference().getMain()) + reference.primColor + "The " + reference.secColor + "UHC" + reference.primColor + " has begun" + reference.secColor +".");
                 UHCPlayer.getPlayers().values().stream().filter(UHCPlayer::isOnline).filter(UHCPlayer::isScattered).forEach(e->{
                     UHCPlayer.getByName(e.getPlayer().getName()).setPlayerState(PlayerState.INGAME);
                     main.getNms().removeVehicle(e.getPlayer());

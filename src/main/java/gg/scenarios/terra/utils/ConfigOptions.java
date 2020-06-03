@@ -4,6 +4,7 @@ import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.managers.Reference;
 import gg.scenarios.terra.managers.TeamState;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +29,7 @@ public class ConfigOptions {
 
     public static Inventory config(String name) {
         Inventory inventory = Bukkit.createInventory(null, 54, name);
-        String[] editLore =new  String[]{"For more info /helpop" };
+        String[] editLore =new  String[]{ChatColor.GOLD + "For more info /helpop" };
         ItemStack glass = new ItemCreator(Material.STAINED_GLASS_PANE).setName(" ").get();
 
 

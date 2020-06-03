@@ -44,6 +44,7 @@ public class GameManager {
     private int timer = 0;
     private int healTime = 5;
     private int endTime = 5;
+    private int gameOverTimer = 0;
     private int pvpTime = 15;
     private int meetupTime = 60;
     private int borderTime = 45;

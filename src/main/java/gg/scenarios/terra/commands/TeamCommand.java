@@ -276,7 +276,7 @@ public class TeamCommand implements CommandExecutor {
 
                 for (OfflinePlayer players : team.getPlayers()) {
                     if (players instanceof Player) {
-                        ((Player) players).sendMessage(reference.getMain() + target.getName() + " were invited to your team.");
+                        ((Player) players).sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getTeam() + target.getName() + " were invited to your team."));
                     }
                 }
 
@@ -284,7 +284,7 @@ public class TeamCommand implements CommandExecutor {
                     invites.put(player, new ArrayList<Player>());
                 }
                 invites.get(player).add(target);
-                target.sendMessage(ChatColor.translateAlternateColorCodes('&',reference.getMain() + "&7You have been invited to &3" + player.getName() + "&7's team."));
+                target.sendMessage(ChatColor.translateAlternateColorCodes('&',reference.getTeam() + "&7You have been invited to &3" + player.getName() + "&7's team."));
                 target.sendMessage("§7- §aTo accept, type /team accept " + player.getName());
                 target.sendMessage("§7- §aTo decline, type /team deny " + player.getName());
             } else if (args[0].equalsIgnoreCase("kick")) {

@@ -1,7 +1,6 @@
 package gg.scenarios.terra.utils;
 
 import gg.scenarios.terra.Terra;
-import gg.scenarios.terra.tasks.PregenTask;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.DedicatedServer;
 import org.apache.commons.io.IOUtils;
@@ -205,7 +204,10 @@ public class Utils {
             @Override
             public void run() {
                 Bukkit.broadcastMessage("§bStarted loading the world " + world.getName());
-                new PregenTask();
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " set " + radius + " " + radius + " 0 0");
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " fill 1700");
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " fill confirm");
             }
         }.runTaskLater(terra, 15 * 20L);
         world.getWorldBorder().setCenter(0, 0);
@@ -224,7 +226,7 @@ public class Utils {
     }
 
     public void deleteWorld(String world) {
-        File filePath = new File("/home/container", world);
+        File filePath = new File("./", world);
         deleteFiles(filePath);
         Bukkit.broadcastMessage("§fThe world§7 " + world + "§f has begun§7 deleting");
         Bukkit.broadcastMessage("§fWill finish deleting in§7 30 seconds");
@@ -243,6 +245,13 @@ public class Utils {
 
             online.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
         }
+    }
+
+    public static boolean checkWinners() {
+        if (Terra.getInstance().getGameManager().getPlayers().size() == 1) {
+            return true;
+        }
+        return false;
     }
 
     public boolean deleteFiles(File path) {

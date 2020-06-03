@@ -98,6 +98,13 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.winbli</groupId>
+            <artifactId>WorldBorder</artifactId>
+            <version>1.8.6</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/WorldBorder.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
             <version>[4.0,)</version>

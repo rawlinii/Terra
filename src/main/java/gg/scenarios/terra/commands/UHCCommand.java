@@ -88,7 +88,7 @@ public class UHCCommand implements CommandExecutor {
                     }, 20 * 30);
 
                 } else if (args[0].equalsIgnoreCase("stop")) {
-                    Bukkit.shutdown();
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "restart");
                 } else if (args[0].equalsIgnoreCase("mod")) {
                     if (uhc.getGameManager().getMods().contains(player.getUniqueId())) {
                         UHCPlayer uhcPlayer = UHCPlayer.getByName(player.getName());

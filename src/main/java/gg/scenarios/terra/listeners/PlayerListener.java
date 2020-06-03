@@ -383,6 +383,10 @@ public class PlayerListener implements Listener {
                 player.getInventory().clear();
                 player.updateInventory();
                 player.setLevel(0);
+                player.setMaxHealth(20);
+                for (PotionEffect effect : player.getActivePotionEffects()) {
+                    player.removePotionEffect(effect.getType());
+                }
                 player.getInventory().setHelmet(null);
                 player.getInventory().setChestplate(null);
                 player.getInventory().setLeggings(null);

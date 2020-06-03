@@ -16,6 +16,7 @@ import org.json.simple.JSONValue;
 
 import java.net.URL;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class WhiteListCommand implements CommandExecutor {
 
@@ -60,7 +61,9 @@ public class WhiteListCommand implements CommandExecutor {
                             count++;
                         });
                         uhc.getGameManager().getPlayers().removeAll(uhc.getGameManager().getPlayers());
-                        uhc.getGameManager().getWhitelist().forEach(uuid -> {
+
+                        Predicate<UUID> predicate = uuid -> UHCPlayer.getByUUID(uuid).isInLobby();
+                        uhc.getGameManager().getWhitelist().stream().filter(predicate).forEach(uuid -> {
                             uhc.getGameManager().getPlayers().add(UHCPlayer.getByUUID(uuid));
                         });
 //                        uhc.getGameManager().getWhitelist().forEach(uuid -> {

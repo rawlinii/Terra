@@ -48,7 +48,7 @@ public class GameStartedTask {
             if(gameManager.getHealTimeInSeconds() == gameManager.getTimer()) {
                 utils.broadcast(ChatColor.translateAlternateColorCodes('&', main.getReference().getMain()) + reference.primColor + "Final heal has been" + reference.secColor + " given" + reference.primColor + "!");
                 UHCPlayer.getPlayers().values().stream().filter(UHCPlayer::isPlaying).filter(UHCPlayer::isOnline).forEach( (p) -> {
-                    p.getPlayer().setHealth(20.00);
+                    p.getPlayer().setHealth(p.getPlayer().getMaxHealth());
                     p.getPlayer().setSaturation(20.00f);
                 });
             }
@@ -108,7 +108,7 @@ public class GameStartedTask {
 
             if (5 == gameManager.getTimer()){
                 UHCPlayer.getPlayers().values().stream().filter(UHCPlayer::isPlaying).filter(UHCPlayer::isOnline).forEach( (p) -> {
-                    p.getPlayer().setHealth(20.00);
+                    p.getPlayer().setHealth(p.getPlayer().getMaxHealth());
                     p.getPlayer().setSaturation(20.00f);
                 });
                 gameManager.setStartingFall(false);
@@ -124,6 +124,9 @@ public class GameStartedTask {
             int heal = (gameManager.getHealTimeInSeconds() - gameManager.getTimer());
             int pvp = (gameManager.getPvpTimeInSeconds() - gameManager.getTimer());
             int border = (gameManager.getBorderTimeInSeconds() - gameManager.getTimer());
+            int border1 = (gameManager.getBorderTimeInSeconds()+300 - gameManager.getTimer());
+            int border2 = (gameManager.getBorderTimeInSeconds()+600 - gameManager.getTimer());
+            int border3 = (gameManager.getBorderTimeInSeconds()+900 - gameManager.getTimer());
 
             if(heal < 6 && heal>= 1) {
                 utils.broadcast(ChatColor.translateAlternateColorCodes('&', main.getReference().getMain()) +  reference.primColor+"Final heal is in " + reference.secColor + heal + reference.primColor+  " seconds.");
@@ -156,6 +159,15 @@ public class GameStartedTask {
 
 
             if (border < 11 &&border >= 1){
+                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border + reference.primColor+  " seconds.");
+            }
+            if (border1 < 11 &&border1 >= 1){
+                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border + reference.primColor+  " seconds.");
+            }
+            if (border2 < 11 &&border2 >= 1){
+                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border + reference.primColor+  " seconds.");
+            }
+            if (border3 < 11 &&border3 >= 1){
                 utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border + reference.primColor+  " seconds.");
             }
 
@@ -200,13 +212,13 @@ public class GameStartedTask {
                 }
             });
 
-//            if (Utils.checkWinners()){
-//                Bukkit.broadcastMessage(ChatColor.GREEN + "Congratulations to " + main.getGameManager().getPlayers().get(Thorn.getInstance().getGameManager().getPlayers().size() -1).getPlayer().getName());
-//                Bukkit.broadcastMessage(ChatColor.GREEN + "Congratulations to " + main.getGameManager().getPlayers().get(Thorn.getInstance().getGameManager().getPlayers().size() -1).getPlayer().getName());
-//                Bukkit.broadcastMessage(ChatColor.GREEN + "Congratulations to " + main.getGameManager().getPlayers().get(Thorn.getInstance().getGameManager().getPlayers().size() -1).getPlayer().getName());
-//                new GameOverTask();
-//                stopScheduler();
-//            }
+            if (Utils.checkWinners()){
+                Bukkit.broadcastMessage(ChatColor.GREEN + "Congratulations to " + main.getGameManager().getPlayers().get(Terra.getInstance().getGameManager().getPlayers().size() -1).getPlayer().getName());
+                Bukkit.broadcastMessage(ChatColor.GREEN + "Congratulations to " + main.getGameManager().getPlayers().get(Terra.getInstance().getGameManager().getPlayers().size() -1).getPlayer().getName());
+                Bukkit.broadcastMessage(ChatColor.GREEN + "Congratulations to " + main.getGameManager().getPlayers().get(Terra.getInstance().getGameManager().getPlayers().size() -1).getPlayer().getName());
+                new GameOverTask();
+                stopScheduler();
+            }
 
             gameManager.setTimer(gameManager.getTimer()+1);
 
