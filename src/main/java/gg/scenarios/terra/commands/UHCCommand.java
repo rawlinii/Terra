@@ -2,6 +2,7 @@ package gg.scenarios.terra.commands;
 
 import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.managers.GameState;
+import gg.scenarios.terra.managers.TeamState;
 import gg.scenarios.terra.managers.profiles.PlayerState;
 import gg.scenarios.terra.managers.profiles.UHCPlayer;
 import gg.scenarios.terra.scenarios.Scenario;
@@ -52,6 +53,10 @@ public class UHCCommand implements CommandExecutor {
                     player.performCommand("heal all");
                     player.performCommand("whitelist all");
                     player.performCommand("whitelist on");
+                    if (uhc.getGameManager().getTeamState() == TeamState.TEAM){
+                        uhc.getGameManager().getPlayers().stream().filter(UHCPlayer::isOnline).filter(UHCPlayer::isInLobby).forEach(uhcPlayer -> {
+                            uhcPlayer.getPlayer().performCommand("team create");
+                        });}
                     new PrepareGameTask();
                 } else if (args[0].equalsIgnoreCase("config")) {
                     player.openInventory(ConfigOptions.config());
@@ -77,9 +82,7 @@ public class UHCCommand implements CommandExecutor {
                         uhc.getUtils().toggle(player);
                         Location location = new Location(Bukkit.getWorld("uhc"), 0, 100, 0);
                         player.teleport(location);
-                        uhc.getGameManager().getPlayers().stream().filter(UHCPlayer::isOnline).filter(UHCPlayer::isInLobby).forEach(uhcPlayer -> {
-                            uhcPlayer.getPlayer().performCommand("team create");
-                        });
+                        UHCPlayer.getByUUID(player.getUniqueId()).setPlayerState(PlayerState.HOST);
                     }
                 } else if (args[0].equalsIgnoreCase("delete")) {
                     uhc.getUtils().unloadWorld(Bukkit.getWorld("uhc"));

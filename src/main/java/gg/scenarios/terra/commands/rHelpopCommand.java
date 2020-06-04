@@ -39,7 +39,7 @@ public class rHelpopCommand implements CommandExecutor {
                 for (UUID uuid : Terra.getInstance().getGameManager().getMods()) {
                     Player mod = Bukkit.getPlayer(uuid);
                     if (mod != null) {
-                        mod.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "([" + sender.getName() + "]: /" + cmd.getName() + " " + target.getName() + " " + message + ")");
+                        mod.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "([" + sender.getName() + "]: /" + cmd.getName() + " " + target.getName() + " " + message.toString().trim() + ")");
                     }
                 }
             }

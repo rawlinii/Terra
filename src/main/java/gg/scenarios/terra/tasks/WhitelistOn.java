@@ -25,7 +25,7 @@ public class WhitelistOn {
             count--;
             String countDown = uhc.getUtils().convertToNice(count);
             Bukkit.getOnlinePlayers().forEach(p ->{
-                HotBarMessage.sendHotBarMessage(p, ChatColor.GRAY + "Whitelist is off for " + ChatColor.DARK_GRAY + "» " + ChatColor.GREEN +countDown);
+                HotBarMessage.sendHotBarMessage(p, ChatColor.GRAY + "Whitelist is off for " + ChatColor.DARK_GRAY + "» " + ChatColor.GOLD +countDown);
             });
 
             if (count == 1){

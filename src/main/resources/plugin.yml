@@ -15,3 +15,8 @@ commands:
   heal:
   coords:
     aliases: [pmc, sendcoords]
+  tc:
+    aliases: [teamchat, pc]
+  backpacks:
+    aliases: [bp]
+  invsee:

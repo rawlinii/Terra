@@ -8,6 +8,7 @@ import java.util.List;
 public class Game {
 
     private String host;
+    private int count;
     private String matchPost;
     private String gameType;
     private String time;

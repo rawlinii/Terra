@@ -25,7 +25,7 @@ public class WhitelistOff {
             count--;
             String countDown = uhc.getUtils().convertToNice(count);
             Bukkit.getOnlinePlayers().forEach(p ->{
-                HotBarMessage.sendHotBarMessage(p, ChatColor.GRAY + "Whitelist is off in " + ChatColor.DARK_GRAY + "» " + ChatColor.GREEN +countDown);
+                HotBarMessage.sendHotBarMessage(p, ChatColor.GRAY + "Whitelist is off in " + ChatColor.DARK_GRAY + "» " + ChatColor.GOLD +countDown);
                 uhc.getNms().sendTablist(p, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC +"@ScenariosUHC \n" +
                         ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
                         ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n"+ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
@@ -39,7 +39,7 @@ public class WhitelistOff {
                     uhc.getUtils().broadcast(tweet.getLinkUrl());
 
 
-                    Game game = new Game(uhc.getGameManager().getHostingName(), uhc.getGameManager().getMatchPost(),teamSizeToString(), (uhc.getGameManager().getMatch().getMatchTime().getHour() + ":" + uhc.getGameManager().getMatch().getMatchTime().getMinute()), "na.scenarios.gg",
+                    Game game = new Game(uhc.getGameManager().getHostingName(), uhc.getGameManager().getCount(), uhc.getGameManager().getMatchPost(),teamSizeToString(), (uhc.getGameManager().getMatch().getMatchTime().getHour() + ":" + uhc.getGameManager().getMatch().getMatchTime().getMinute()), "na.scenarios.gg",
                             getScenarios());
                     uhc.getRedis().getClient().getTopic("gameServer").publishAsync(uhc.getGson().toJson(game));
                 } catch (Exception e) {

@@ -162,13 +162,13 @@ public class GameStartedTask {
                 utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border + reference.primColor+  " seconds.");
             }
             if (border1 < 11 &&border1 >= 1){
-                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border + reference.primColor+  " seconds.");
+                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border1 + reference.primColor+  " seconds.");
             }
             if (border2 < 11 &&border2 >= 1){
-                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border + reference.primColor+  " seconds.");
+                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border2 + reference.primColor+  " seconds.");
             }
             if (border3 < 11 &&border3 >= 1){
-                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border + reference.primColor+  " seconds.");
+                utils.broadcast(ChatColor.translateAlternateColorCodes('&',reference.getMain()) +  reference.primColor+"Border will shrink in " + reference.secColor + border3 + reference.primColor+  " seconds.");
             }
 
             UHCPlayer.getPlayers().values().stream().filter(UHCPlayer::isOnline).forEach(e ->{

@@ -13,6 +13,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Skull;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,7 +44,7 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onDamage(EntityDamageEvent event){
+    public void onDamage(EntityDamageEvent event) {
         if (gameManager.isStartingFall()) {
             if (event.getEntityType().equals(EntityType.PLAYER)) {
                 if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
@@ -65,6 +66,7 @@ public class PlayerListener implements Listener {
             }
         }
     }
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDeathEvent(EntityDeathEvent event) {
         if (!(event.getEntity() instanceof Zombie)) return;
@@ -92,7 +94,7 @@ public class PlayerListener implements Listener {
     public void onPlayerItemConsume(PlayerItemConsumeEvent event) {
         Player p = event.getPlayer();
         try {
-            if (!gameManager.isNotch()){
+            if (!gameManager.isNotch()) {
                 if (event.getItem().getType() == Material.GOLDEN_APPLE && event.getItem().getDurability() == 1) {
                     event.setCancelled(true);
                 }
@@ -100,14 +102,14 @@ public class PlayerListener implements Listener {
                 ItemStack goldenHead = event.getItem();
                 if (goldenHead.getItemMeta().getDisplayName().contains("Golden Head")) {
 
-                    if(gameManager.isAbsorption()) {
+                    if (gameManager.isAbsorption()) {
                         PotionEffect pe = new PotionEffect(PotionEffectType.ABSORPTION, 2400, 0);
                         pe.apply(p);
                     }
                     PotionEffect re = new PotionEffect(PotionEffectType.REGENERATION, 200, 1);
 
                     re.apply(p);
-                }else{
+                } else {
                     p.removePotionEffect(PotionEffectType.ABSORPTION);
                 }
             }
@@ -156,9 +158,8 @@ public class PlayerListener implements Listener {
     }
 
 
-
     @EventHandler
-    public void onHorseless(EntityMountEvent event){
+    public void onHorseless(EntityMountEvent event) {
         event.setCancelled(true);
     }
 
@@ -173,7 +174,7 @@ public class PlayerListener implements Listener {
     public void onBow(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Arrow) || !(event.getEntity() instanceof Player)) {
             return;
-       }
+        }
 
         Player player = (Player) event.getEntity();
         Arrow damager = (Arrow) event.getDamager();
@@ -307,10 +308,10 @@ public class PlayerListener implements Listener {
                 event.getPlayer().hidePlayer(mod);
             }
         }*/
-      if (gameManager.getGameState() == GameState.LOBBY){
-          if (UHCPlayer.getByName(event.getPlayer().getName()) == null)
-          new UHCPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getName());
-      }
+        if (gameManager.getGameState() == GameState.LOBBY) {
+            if (UHCPlayer.getByName(event.getPlayer().getName()) == null)
+                new UHCPlayer(event.getPlayer().getUniqueId(), event.getPlayer().getName());
+        }
 
         if (gameManager.getMods().contains(event.getPlayer().getUniqueId())) {
             for (Player player : Bukkit.getOnlinePlayers()) {
@@ -323,12 +324,16 @@ public class PlayerListener implements Listener {
             UHCPlayer uhcPlayer = UHCPlayer.getByName(event.getPlayer().getName());
             Player player = event.getPlayer();
             String matchPost;
-            if (gameManager.getMatchPost() == null){
+            if (gameManager.getMatchPost() == null) {
                 matchPost = "None.";
-            }else{
+            } else {
                 matchPost = gameManager.getMatchPost();
             }
-            terra.getNms().sendTablist(player, ChatColor.DARK_RED +"NA " +ChatColor.GREEN+"» " + ChatColor.DARK_GRAY + "na.scenarios.gg", ChatColor.DARK_RED +"Matchpost " +ChatColor.GREEN+"» " + ChatColor.DARK_GRAY + matchPost);
+            terra.getNms().sendTablist(player, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC + "@ScenariosUHC \n" +
+                    ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
+                    ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) player).getHandle().ping + "ms \n", "\n" + ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
+                    "No Match Scheduled");
+
             if (gameManager.getGameState().equals(GameState.STARTED)) {
                 if (uhcPlayer.getPlayerState().equals(PlayerState.DEAD) || uhcPlayer.getPlayerState().equals(PlayerState.HOST) || uhcPlayer.getPlayerState().equals(PlayerState.MODERATOR) || uhcPlayer.getPlayerState().equals(PlayerState.SPECTATOR)) {
                     uhcPlayer.getPlayer().setGameMode(GameMode.SPECTATOR);
@@ -398,7 +403,6 @@ public class PlayerListener implements Listener {
     }
 
 
-
     @EventHandler
     public void noBurn(EntityDamageEvent event) {
         if (event.getEntity() instanceof Zombie) {
@@ -426,7 +430,7 @@ public class PlayerListener implements Listener {
     public void onKill(EntityDeathEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
-        if (player.getKiller() instanceof Player) {
+        if (player.getKiller() != null) {
             Player p = (Player) event.getEntity();
             Player target = player.getKiller();
             terra.getUtils().broadcast(reference.secColor + player.getName() + reference.primColor + " was slain by " + reference.secColor + target.getName());
@@ -483,7 +487,6 @@ public class PlayerListener implements Listener {
             terra.getUtils().kickPlayer(player);
         }
     }
-
 
 
     public String formatDamage(double health) {

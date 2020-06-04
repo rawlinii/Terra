@@ -55,10 +55,10 @@ public class Superheros extends Scenario {
                 Player player = Bukkit.getPlayer(uuid);
                 switch (powersMap.get(uuid)){
                     case JUMP:
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 3));
                         break;
                     case RESISTANCE:
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0));
                         break;
                     case STRENGTH:
                         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0));
@@ -68,7 +68,7 @@ public class Superheros extends Scenario {
                         player.setHealth(player.getMaxHealth());
                         break;
                     case SPEED:
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
                         break;
                     case INVIS:
                         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 2));
@@ -163,6 +163,7 @@ public class Superheros extends Scenario {
                     types.add(Powers.RESISTANCE);
                 }
             }
+            types.forEach(System.out::println);
         }
         this.enabled = enabled;
     }

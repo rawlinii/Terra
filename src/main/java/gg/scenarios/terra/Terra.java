@@ -154,5 +154,8 @@ public class Terra extends JavaPlugin implements Listener {
         getCommand("scenarios").setExecutor(new ScenariosCommand());
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("coords").setExecutor(new CoordsCommand());
+        getCommand("tc").setExecutor(new TeamChatCommand());
+        getCommand("backpacks").setExecutor(new BackpacksCommand());
+        getCommand("invsee").setExecutor(new InvseeCommand());
     }
 }

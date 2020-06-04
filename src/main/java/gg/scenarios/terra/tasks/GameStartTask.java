@@ -70,7 +70,7 @@ public class GameStartTask {
                 UHCPlayer.getPlayers().values().stream().filter(UHCPlayer::isOnline).filter(UHCPlayer::isScattered).forEach(e->{
                     UHCPlayer.getByName(e.getPlayer().getName()).setPlayerState(PlayerState.INGAME);
                     main.getNms().removeVehicle(e.getPlayer());
-                    utils.giveItem(e.getPlayer(), new ItemStack(Material.COOKED_BEEF, 10));
+                    Utils.giveItem(e.getPlayer(), new ItemStack(Material.COOKED_BEEF, 10));
                     e.getPlayer().setFoodLevel(20);
                     e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERDRAGON_GROWL, 10, 1);
                 });

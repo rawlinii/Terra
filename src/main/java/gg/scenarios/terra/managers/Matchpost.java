@@ -53,6 +53,7 @@ public class Matchpost {
         terra.getGameManager().setMeetupTime(response.getBody().getObject().getInt("length"));
         terra.getGameManager().setHostingName(response.getBody().getObject().getString("hostingName"));
         scenarios =  response.getBody().getObject().getJSONArray("scenarios").toList();
+        terra.getGameManager().setCount(response.getBody().getObject().getInt("count"));
 
         String dateTime = response.getBody().getObject().getString("opens");
         ZonedDateTime serverTime = ZonedDateTime.now(ZoneId.of("UTC"));
