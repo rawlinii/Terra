@@ -18,28 +18,30 @@ public class WhitelistOff {
     int taskId;
     private Terra uhc = Terra.getInstance();
     int count;
+
     public WhitelistOff(int diff) {
         count = diff;
         taskId = Bukkit.getServer().getScheduler().runTaskTimer(uhc, () -> {
 
             count--;
             String countDown = uhc.getUtils().convertToNice(count);
-            Bukkit.getOnlinePlayers().forEach(p ->{
-                HotBarMessage.sendHotBarMessage(p, ChatColor.GRAY + "Whitelist is off in " + ChatColor.DARK_GRAY + "» " + ChatColor.GOLD +countDown);
-                uhc.getNms().sendTablist(p, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC +"@ScenariosUHC \n" +
+            Bukkit.getOnlinePlayers().forEach(p -> {
+                HotBarMessage.sendHotBarMessage(p, ChatColor.GRAY + "Whitelist is off in " + ChatColor.DARK_GRAY + "» " + ChatColor.GOLD + countDown);
+                uhc.getNms().sendTablist(p, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC + "@ScenariosUHC \n" +
                         ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
-                        ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n"+ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
+                        ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n" + ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "" +
+                        "Host: " + ChatColor.GOLD + uhc.getGameManager().getHostingName() + "\n" + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
                         uhc.getGameManager().getMatchPost());
             });
 
-            if (count == 900){
+            if (count == 900) {
                 try {
                     PostTweet tweet = new PostTweet(15);
                     uhc.getUtils().broadcast(uhc.getReference().getMain() + ChatColor.DARK_GRAY + "Posted to twitter");
                     uhc.getUtils().broadcast(tweet.getLinkUrl());
 
 
-                    Game game = new Game(uhc.getGameManager().getHostingName(), uhc.getGameManager().getCount(), uhc.getGameManager().getMatchPost(),teamSizeToString(), (uhc.getGameManager().getMatch().getMatchTime().getHour() + ":" + uhc.getGameManager().getMatch().getMatchTime().getMinute()), "na.scenarios.gg",
+                    Game game = new Game(uhc.getGameManager().getHostingName(), uhc.getGameManager().getCount(), uhc.getGameManager().getMatchPost(), teamSizeToString(), (uhc.getGameManager().getMatch().getMatchTime().getHour() + ":" + uhc.getGameManager().getMatch().getMatchTime().getMinute()), "na.scenarios.gg",
                             getScenarios());
                     uhc.getRedis().getClient().getTopic("gameServer").publishAsync(uhc.getGson().toJson(game));
                 } catch (Exception e) {
@@ -48,16 +50,16 @@ public class WhitelistOff {
                 }
             }
 
-            if (count == 1){
+            if (count == 1) {
                 uhc.getGameManager().setWhitelistEnabled(false);
                 uhc.getUtils().broadcast(ChatColor.DARK_GRAY + "the whitelist has been " + ChatColor.DARK_RED + "disabled.");
 
             }
             if (count == -1) {
 
-                if (uhc.getGameManager().getTeamState() == TeamState.SOLO){
+                if (uhc.getGameManager().getTeamState() == TeamState.SOLO) {
                     new WhitelistOn(180);
-                }else{
+                } else {
                     new WhitelistOn(420);
                 }
                 stopScheduler();
@@ -72,15 +74,22 @@ public class WhitelistOff {
         return scenarios;
     }
 
-    public void stopScheduler(){
+    public void stopScheduler() {
         Bukkit.getServer().getScheduler().cancelTask(this.taskId);
     }
+
     private String teamSizeToString() {
         if (uhc.getGameManager().getTeamState() == TeamState.SOLO) {
             return "FFA";
-        }else if (uhc.getGameManager().getTeamState() == TeamState.SLAVEMARKET){
+        } else if (uhc.getGameManager().getTeamState() == TeamState.SLAVEMARKET) {
             return "Slave Market";
-        }else {
+        } else if (uhc.getGameManager().getTeamState() == TeamState.RvB) {
+            return "RvB";
+        } else if (uhc.getGameManager().getTeamState() == TeamState.RvGvBvY) {
+            return "RvGvBvY";
+        } else if (uhc.getGameManager().getTeamState() == TeamState.RANDOM) {
+            return "rTo"+uhc.getGameManager().getTeamSize();
+        } else {
             return "To" + uhc.getGameManager().getTeamSize();
         }
     }

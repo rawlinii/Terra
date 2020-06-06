@@ -20,3 +20,4 @@ commands:
   backpacks:
     aliases: [bp]
   invsee:
+  tp:

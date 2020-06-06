@@ -152,7 +152,7 @@ public class Utils {
                     Block block = location.getBlock();
                     if (block.getType() == Material.GRASS) {
                         locationQueue.add(block.getLocation());
-                        materialQueue.add(Material.STAINED_CLAY);
+                        materialQueue.add(Material.GRASS);
                     } else if (block.getType() == Material.LOG || block.getType() == Material.LOG_2 || block.getType() == Material.LEAVES || block.getType() == Material.LEAVES_2
                             || block.getType() == Material.VINE || block.getType() == Material.SNOW || block.getType() == Material.DOUBLE_PLANT
                             || block.getType() == Material.YELLOW_FLOWER || block.getType() == Material.RED_MUSHROOM || block.getType() == Material.BROWN_MUSHROOM) {
@@ -171,16 +171,8 @@ public class Utils {
                     if (!locationQueue.isEmpty()) {
                         Location location = locationQueue.poll();
                         Material material = materialQueue.poll();
-                        if (material == Material.STAINED_CLAY) {
-                            int rand = (int) ((Math.random() * 2) + 1);
-                            int data;
-                            if (rand == 1) {
-                                data = 1;
-                            } else {
-                                data = 4;
-                            }
-                            location.getBlock().setType(Material.STAINED_CLAY);
-                            location.getBlock().setData((byte) data);
+                        if (material == Material.GRASS) {
+                            location.getBlock().setType(Material.GRASS);
                         } else {
                             location.getBlock().setType(Material.AIR);
                         }

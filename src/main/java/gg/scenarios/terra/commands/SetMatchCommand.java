@@ -2,14 +2,11 @@ package gg.scenarios.terra.commands;
 
 import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.managers.Matchpost;
-import gg.scenarios.terra.teams.Teams;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
 
 public class SetMatchCommand implements CommandExecutor {
 

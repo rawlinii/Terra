@@ -62,6 +62,11 @@ public class ScatterTask {
                     i++;
                 }
                 break;*/
+            case RANDOM:
+            case SLAVEMARKET:
+            case CAPTAINS:
+            case RvGvBvY:
+            case RvB:
             case TEAM:
                 if (i < 150) {
                     for (Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
@@ -85,6 +90,7 @@ public class ScatterTask {
         }
         scatter();
     }
+
     private void scatter() {
         taskId = Bukkit.getServer().getScheduler().runTaskTimer(main, () -> {
             try {
@@ -104,8 +110,7 @@ public class ScatterTask {
                         HotBarMessage.sendHotBarMessage(player, ChatColor.GRAY + "Scattered " + ChatColor.DARK_GRAY + " » " + ChatColor.GREEN + profile.getPlayer().getName());
                     });
                     players.remove(profile);
-                }
-                else{
+                } else {
                     players.remove(profile);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -115,8 +120,6 @@ public class ScatterTask {
             }
         }, 0, 3L).getTaskId();
     }
-
-
 
 
     public void stopScheduler() {

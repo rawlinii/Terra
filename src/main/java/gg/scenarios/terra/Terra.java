@@ -14,7 +14,7 @@ import gg.scenarios.terra.managers.Reference;
 import gg.scenarios.terra.nms.NMS;
 import gg.scenarios.terra.nms.verisons.v1_8_R3;
 import gg.scenarios.terra.scenarios.ScenarioManager;
-import gg.scenarios.terra.teams.Teams;
+import gg.scenarios.terra.managers.teams.Teams;
 import gg.scenarios.terra.utils.Utils;
 import gg.scenarios.terra.world.BiomeSwap;
 import gg.scenarios.terra.world.IncreasedCaneRates;
@@ -157,5 +157,6 @@ public class Terra extends JavaPlugin implements Listener {
         getCommand("tc").setExecutor(new TeamChatCommand());
         getCommand("backpacks").setExecutor(new BackpacksCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
+        getCommand("tp").setExecutor(new TpCommand(this));
     }
 }

@@ -11,8 +11,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -49,7 +51,16 @@ public class Superheros extends Scenario {
         createPowers();
     }
 
-    private void createPowers() {
+    @EventHandler
+    public void onDamage(EntityDamageEvent event) {
+        if (event.getEntityType().equals(EntityType.PLAYER)) {
+            if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+        private void createPowers() {
         powersMap.keySet().forEach(uuid -> {
             try{
                 Player player = Bukkit.getPlayer(uuid);

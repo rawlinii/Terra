@@ -4,5 +4,9 @@ public enum TeamState {
     SOLO,
     SLAVEMARKET,
     CAPTAINS,
+    RANDOM,
+    RvB,
+    RvGvBvY,
     TEAM;
+
 }

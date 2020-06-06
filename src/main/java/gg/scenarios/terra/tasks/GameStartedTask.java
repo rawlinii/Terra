@@ -197,13 +197,9 @@ public class GameStartedTask {
                                 .replace("{1}", utils.convertToNice(gameManager.getBorderTimeInSeconds()+600- gameManager.getTimer())));
                     }else if (gameManager.getTimer() < gameManager.getBorderTimeInSeconds()+900){
 
-                        HotBarMessage.sendHotBarMessage(e.getPlayer(), reference.primColor + "Border » " +  reference.secColor+"{0}"
-                                .replace("{0}", (String.valueOf(gameManager.getBorderRadius()))) + reference.primColor+ " Next Shrink »" + reference.secColor + "{1}"
-                                .replace("{1}", utils.convertToNice(gameManager.getBorderTimeInSeconds()+900- gameManager.getTimer())));
-                    }else if (gameManager.getTimer() < gameManager.getMeetupTimeInSeconds()){
+                        HotBarMessage.sendHotBarMessage(e.getPlayer(), reference.primColor + "Meetup is now | Border » " +  reference.secColor+"{0}"
+                                .replace("{0}", (String.valueOf(gameManager.getBorderRadius()))) + reference.primColor);
 
-                        HotBarMessage.sendHotBarMessage(e.getPlayer(), reference.primColor + "Meetup » " +  reference.secColor+"{0}"
-                                .replace("{0}", meetuptime) + reference.primColor+ " Border » " +reference.secColor+ Math.ceil(Bukkit.getWorld("uhc").getWorldBorder().getSize() / 2));
                     }else{
                         HotBarMessage.sendHotBarMessage(e.getPlayer(), reference.primColor + "Meetup has started " +  reference.secColor+ (main.getScenarioManager().getScenarioByName("SkyHigh").isEnabled() ? " " : "No Skybasing or Mining!"));
                     }

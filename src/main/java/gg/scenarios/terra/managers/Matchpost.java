@@ -47,6 +47,18 @@ public class Matchpost {
         if (response.getBody().getObject().getString("teams").equalsIgnoreCase("chosen")){
             terra.getGameManager().setTeamState(TeamState.TEAM);
             terra.getGameManager().setTeamSize(response.getBody().getObject().getInt("size"));
+        }else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("custom")){
+            if (response.getBody().getObject().getString("customStyle").equalsIgnoreCase("RvGvBvY")){
+                terra.getGameManager().setTeamState(TeamState.RvGvBvY);
+                terra.getGameManager().setTeamSize(0);
+
+            }
+        }else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("rvb")){
+            terra.getGameManager().setTeamState(TeamState.RvB);
+            terra.getGameManager().setTeamSize(0);
+        }else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("random")){
+            terra.getGameManager().setTeamState(TeamState.RANDOM);
+            terra.getGameManager().setTeamSize(response.getBody().getObject().getInt("size"));
         }
 
         terra.getGameManager().setBorderTime(response.getBody().getObject().getInt("length") - 15);

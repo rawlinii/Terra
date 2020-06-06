@@ -42,7 +42,7 @@ public class TeamCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             if (args.length == 0) {
-                if (gameManager.getTeamState().equals(TeamState.SOLO)) {
+                if (gameManager.getTeamState().equals(TeamState.SOLO) || gameManager.getTeamState().equals(TeamState.RvB) || gameManager.getTeamState().equals(TeamState.RvGvBvY)) {
                     player.sendMessage(ChatColor.RED + "This is an FFA or randomteams game.");
                     return true;
                 }
@@ -63,7 +63,7 @@ public class TeamCommand implements CommandExecutor {
 
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("create")) {
-                    if (gameManager.getTeamState().equals(TeamState.SOLO) || gameManager.getTeamState().equals(TeamState.SLAVEMARKET)) {
+                    if (gameManager.getTeamState().equals(TeamState.SOLO) || gameManager.getTeamState().equals(TeamState.SLAVEMARKET) ||gameManager.getTeamState().equals(TeamState.RANDOM) || gameManager.getTeamState().equals(TeamState.RvGvBvY) || gameManager.getTeamState().equals(TeamState.RvB)) {
                         player.sendMessage(ChatColor.RED + "This is an FFA or randomteams game.");
                         return true;
                     }
@@ -91,7 +91,7 @@ public class TeamCommand implements CommandExecutor {
 
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getMain()) + "Team created! Use /team invite <player> to invite a player.");
                 } else if (args[0].equalsIgnoreCase("leave")) {
-                    if (gameManager.getTeamState().equals(TeamState.SOLO) || gameManager.getTeamState().equals(TeamState.SLAVEMARKET)) {
+                    if (gameManager.getTeamState().equals(TeamState.SOLO) || gameManager.getTeamState().equals(TeamState.SLAVEMARKET) ||gameManager.getTeamState().equals(TeamState.RANDOM) || gameManager.getTeamState().equals(TeamState.RvGvBvY) || gameManager.getTeamState().equals(TeamState.RvB)) {
                         player.sendMessage(ChatColor.RED + "This is an FFA or randomteams game.");
                         return true;
                     }

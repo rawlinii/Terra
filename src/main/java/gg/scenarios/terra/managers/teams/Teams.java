@@ -1,8 +1,7 @@
-package gg.scenarios.terra.teams;
+package gg.scenarios.terra.managers.teams;
 
 import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.managers.Reference;
-import gg.scenarios.terra.managers.profiles.UHCPlayer;
 import gg.scenarios.terra.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,6 +13,7 @@ import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Teams {
     private Scoreboard sb = Bukkit.getScoreboardManager().getMainScoreboard();
@@ -206,6 +206,17 @@ public class Teams {
         return player.getScoreboard().getPlayerTeam(player);
     }
 
+
+    public Team getRandomTeam(){
+        ArrayList<Team> teamArrayList = new ArrayList<>();
+
+        for (Team team : getTeams()) {
+            if (team.getSize() == 0) {
+                teamArrayList.add(team);
+            }
+        }
+        return teamArrayList.get(new Random().nextInt(teamArrayList.size()));
+    }
     /**
      * Sets up all the teams.
      */

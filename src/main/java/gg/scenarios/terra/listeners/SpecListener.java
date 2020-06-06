@@ -40,6 +40,7 @@ import org.bukkit.potion.PotionType;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collector;
@@ -52,6 +53,82 @@ public class SpecListener implements Listener {
 
     public SpecListener(Terra main) {
         this.main = main;
+    }
+
+
+    private HashMap<String, Integer> totalD = new HashMap<String, Integer>();
+    private HashMap<String, Integer> totalG = new HashMap<String, Integer>();
+    private ArrayList<Location> locs = new ArrayList<>();
+
+
+    @EventHandler
+    public void onDiamond(BlockBreakEvent event) {
+        if (event.getBlock().getType() != Material.DIAMOND_ORE) return;
+        if (locs.contains(event.getBlock().getLocation())) return;
+
+        Player player = event.getPlayer();
+        int amount = 0;
+        Location loc = event.getBlock().getLocation();
+
+        for (int x = loc.getBlockX() - 1; x <= loc.getBlockX() + 1; x++) {
+            for (int y = loc.getBlockY() - 1; y <= loc.getBlockY() + 1; y++) {
+                for (int z = loc.getBlockZ() - 1; z <= loc.getBlockZ() + 1; z++) {
+                    if (loc.getWorld().getBlockAt(x, y, z).getType() == Material.DIAMOND_ORE) {
+                        amount++;
+                        locs.add(loc.getWorld().getBlockAt(x, y, z).getLocation());
+                    }
+                }
+            }
+        }
+
+        if (totalD.containsKey(player.getName())) {
+            totalD.put(player.getName(), totalD.get(player.getName()) + amount);
+        } else {
+            totalD.put(player.getName(), amount);
+        }
+
+        for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+            if (main.getGameManager().getMods().contains(online.getUniqueId())) {
+                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                    online.sendMessage("[§9S§f] §7" + player.getPlayerListName() + "§7» §bDiamond §f[V:§b" + amount + "§f] [T:§b" + totalD.get(player.getName()) + "§f]");
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onMineGold(BlockBreakEvent event) {
+        if (event.getBlock().getType() != Material.GOLD_ORE) return;
+        if (locs.contains(event.getBlock().getLocation())) return;
+
+        Player player = event.getPlayer();
+        int amount = 0;
+        Location loc = event.getBlock().getLocation();
+
+        for (int x = loc.getBlockX() - 1; x <= loc.getBlockX() + 1; x++) {
+            for (int y = loc.getBlockY() - 1; y <= loc.getBlockY() + 1; y++) {
+                for (int z = loc.getBlockZ() - 1; z <= loc.getBlockZ() + 1; z++) {
+                    if (loc.getWorld().getBlockAt(x, y, z).getType() == Material.GOLD_ORE) {
+                        amount++;
+                        locs.add(loc.getWorld().getBlockAt(x, y, z).getLocation());
+                    }
+                }
+            }
+        }
+
+        if (totalG.containsKey(player.getName())) {
+            totalG.put(player.getName(), totalG.get(player.getName()) + amount);
+        } else {
+            totalG.put(player.getName(), amount);
+        }
+
+        for (Player online : Bukkit.getServer().getOnlinePlayers()) {
+            if (main.getGameManager().getMods().contains(online.getUniqueId())) {
+                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                    online.sendMessage("[§9S§f] §7" + player.getPlayerListName() + "§7» §6Gold §f[V:§6" + amount + "§f] [T:§6" + totalG.get(player.getName()) + "§f]");
+                }
+            }
+        }
     }
 
     @EventHandler

@@ -6,8 +6,7 @@ import gg.scenarios.terra.managers.TeamState;
 import gg.scenarios.terra.managers.profiles.PlayerState;
 import gg.scenarios.terra.managers.profiles.UHCPlayer;
 import gg.scenarios.terra.scenarios.Scenario;
-import gg.scenarios.terra.tasks.PrepareGameTask;
-import gg.scenarios.terra.tasks.ScatterTask;
+import gg.scenarios.terra.tasks.*;
 import gg.scenarios.terra.utils.ConfigOptions;
 import gg.scenarios.terra.utils.HotBarMessage;
 import org.bukkit.Bukkit;
@@ -110,8 +109,18 @@ public class UHCCommand implements CommandExecutor {
                         Location location = new Location(Bukkit.getWorld("uhc"), 0, 100, 0);
                         player.teleport(location);
                     }
+                }else if (args[0].equalsIgnoreCase("rvb")){
+                    player.sendMessage(ChatColor.GRAY + "Starting RvB Assignment");
+                    new RvBTask();
+                }else if (args[0].equalsIgnoreCase("rvgvbvy")){
+                    player.sendMessage(ChatColor.GRAY + "Starting RvB Assignment");
+                    new RvGvBvYTask();
+                }else {
+                    if (args[0].equalsIgnoreCase("randomteams")) {
+                        player.sendMessage(ChatColor.GRAY + "Starting Random Team Assignment");
+                        new RandomTeamsTask();
+                    }
                 }
-
             } else {
                 player.sendMessage(ChatColor.RED + "No perm");
             }
