@@ -99,7 +99,9 @@ public class UHCCommand implements CommandExecutor {
                         player.setGameMode(GameMode.SURVIVAL);
                         uhcPlayer.setPlayerState(PlayerState.LOBBY);
                         uhcPlayer.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
-                        uhc.getGameManager().getPlayers().add(uhcPlayer);
+                        if (uhc.getGameManager().getGameState() == GameState.LOBBY) {
+                            uhc.getGameManager().getPlayers().add(uhcPlayer);
+                        }
                     } else {
                         uhc.getUtils().toggle(player);
                         player.setGameMode(GameMode.CREATIVE);

@@ -233,7 +233,7 @@ public class TeamCommand implements CommandExecutor {
                 Team team = player.getScoreboard().getPlayerTeam(player);
 
                 if (team == null) {
-                    player.sendMessage(ChatColor.RED + "You arb be not on a team.");
+                    player.sendMessage(ChatColor.RED + "You are not on a team.");
                     return true;
                 }
 

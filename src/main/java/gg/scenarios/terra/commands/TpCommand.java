@@ -39,7 +39,7 @@ public class TpCommand implements CommandExecutor {
                             double z = (double) Double.parseDouble(args[2]);
                             Location location = new Location(player.getWorld(), x, y, z);
                             player.teleport(location);
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getMain()) + reference.primColor + "You have teleported to " + reference.primColor + "x" +reference.secColor + x + reference.primColor + " y" +reference.secColor + y+ reference.primColor + " z" +reference.secColor + z);
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getMain()) + reference.primColor + "You teleported to " + reference.primColor + "x" +reference.secColor + x + reference.primColor + " y" +reference.secColor + y+ reference.primColor + " z" +reference.secColor + z);
                         } catch (NumberFormatException nfe) {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getError() + "Please use proper coordinates"));
                         }
@@ -53,7 +53,7 @@ public class TpCommand implements CommandExecutor {
                         }
                         target.teleport(plLocation);
 
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getMain()) + reference.primColor + "You have teleported " + reference.secColor + args[0] + reference.primColor+" to " + reference.secColor + args[1]);
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getMain()) + reference.primColor + "You teleported " + reference.secColor + args[0] + reference.primColor+" to " + reference.secColor + args[1]);
                     }else if (args.length == 1){
 
                         Location plLocation = Bukkit.getPlayer(args[0]).getLocation();
@@ -63,7 +63,7 @@ public class TpCommand implements CommandExecutor {
                         }
                         player.teleport(plLocation);
 
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getMain()) + reference.primColor + "You have teleported to " + reference.secColor + args[0]);
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', reference.getMain()) + reference.primColor + "You teleported to " + reference.secColor + args[0]);
 
                     }else{
                         player.sendMessage(ChatColor.RED + "/tp <player>");

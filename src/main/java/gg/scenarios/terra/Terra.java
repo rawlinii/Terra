@@ -3,6 +3,7 @@ package gg.scenarios.terra;
 
 import com.google.gson.Gson;
 import gg.scenarios.terra.commands.*;
+//import gg.scenarios.terra.database.Mongo;
 import gg.scenarios.terra.database.Redis;
 import gg.scenarios.terra.listeners.LobbyListener;
 import gg.scenarios.terra.listeners.PlayerListener;
@@ -52,7 +53,8 @@ public class Terra extends JavaPlugin implements Listener {
 
     @Getter
     private Redis redis;
-
+//    @Getter
+//    private Mongo mongo;
     @Getter
     private Gson gson;
     @Override
@@ -71,6 +73,7 @@ public class Terra extends JavaPlugin implements Listener {
         gameManager = new GameManager(this);
         teams = new Teams();
         redis = new Redis(this);
+//        mongo =new Mongo(this);
         scenarioManager = new ScenarioManager();
         for (Team team : teams.getTeams()) {
             for (OfflinePlayer p : team.getPlayers()) {

@@ -90,7 +90,7 @@ public class SpecListener implements Listener {
         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
                 if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
-                    online.sendMessage("[§9S§f] §7" + player.getPlayerListName() + "§7» §bDiamond §f[V:§b" + amount + "§f] [T:§b" + totalD.get(player.getName()) + "§f]");
+                    online.sendMessage("[§9S§f] §7" + player.getPlayerListName() + " §7» §bDiamond §f[V:§b" + amount + "§f] [T:§b" + totalD.get(player.getName()) + "§f]");
                 }
             }
         }
@@ -125,7 +125,7 @@ public class SpecListener implements Listener {
         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
                 if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
-                    online.sendMessage("[§9S§f] §7" + player.getPlayerListName() + "§7» §6Gold §f[V:§6" + amount + "§f] [T:§6" + totalG.get(player.getName()) + "§f]");
+                    online.sendMessage("[§9S§f] §7" + player.getPlayerListName() + " §7» §6Gold §f[V:§6" + amount + "§f] [T:§6" + totalG.get(player.getName()) + "§f]");
                 }
             }
         }

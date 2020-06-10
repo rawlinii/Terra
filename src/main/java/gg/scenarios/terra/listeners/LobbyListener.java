@@ -2,8 +2,10 @@ package gg.scenarios.terra.listeners;
 
 import gg.scenarios.terra.Terra;
 
+import static com.mongodb.client.model.Filters.eq;
 import gg.scenarios.terra.managers.GameState;
 import gg.scenarios.terra.managers.profiles.UHCPlayer;
+import org.bson.Document;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -20,6 +22,8 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -58,6 +62,16 @@ public class LobbyListener implements Listener {
 
     }
 
+    @EventHandler
+    public void health(PlayerMoveEvent event) {
+        if (thorn.getGameManager().getGameState() == GameState.STARTED) return;
+        if (thorn.getGameManager().getGameState() == GameState.LOBBY || thorn.getGameManager().getGameState() == GameState.BIDDING || event.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
+            if (event.getPlayer().getLocation().getY() < 0) {
+                event.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
+            }
+        }
+    }
+
 
     @EventHandler
     public void health(FoodLevelChangeEvent event) {
@@ -78,6 +92,21 @@ public class LobbyListener implements Listener {
         }
     }
 
+
+//    @EventHandler
+//    public void onJoin(PlayerJoinEvent event){
+//        Player player = event.getPlayer();
+//        Document document;
+//        document = thorn.getMongo().getProfiles().find(eq("uuid", player.getUniqueId().toString())).first();
+//        if (document == null){
+//            document = new Document()
+//                    .append("uuid", player.getUniqueId().toString())
+//                    .append("mc_name", player.getName())
+//                    .append("twitter", null);
+//
+//            this.thorn.getMongo().getProfiles().insertOne(document);
+//        }
+//    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -119,11 +148,11 @@ public class LobbyListener implements Listener {
         Player player = event.getPlayer();
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (event.getItem().getType().equals(Material.COMPASS) &&  thorn.getGameManager().getMods().contains(player.getUniqueId())) {
+            if (event.getItem().getType().equals(Material.COMPASS) && thorn.getGameManager().getMods().contains(player.getUniqueId())) {
                 openPlayerInv(player);
                 event.setCancelled(true);
             }
-            if (event.getItem().getType().equals(Material.INK_SACK) &&  thorn.getGameManager().getMods().contains(player.getUniqueId())) {
+            if (event.getItem().getType().equals(Material.INK_SACK) && thorn.getGameManager().getMods().contains(player.getUniqueId())) {
                 if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
                     player.removePotionEffect(PotionEffectType.NIGHT_VISION);
                 } else {
@@ -131,12 +160,12 @@ public class LobbyListener implements Listener {
                 }
                 event.setCancelled(true);
             }
-            if (event.getItem().getType().equals(Material.FEATHER) &&  thorn.getGameManager().getMods().contains(player.getUniqueId())) {
+            if (event.getItem().getType().equals(Material.FEATHER) && thorn.getGameManager().getMods().contains(player.getUniqueId())) {
                 player.teleport(new Location(player.getWorld(), 0, 100, 0));
                 event.setCancelled(true);
             }
         } else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if (event.getItem().getType().equals(Material.COMPASS) &&  thorn.getGameManager().getMods().contains(player.getUniqueId())) {
+            if (event.getItem().getType().equals(Material.COMPASS) && thorn.getGameManager().getMods().contains(player.getUniqueId())) {
                 ArrayList<Player> players = new ArrayList<Player>();
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (!thorn.getGameManager().getMods().contains(online.getUniqueId())) {
@@ -158,7 +187,7 @@ public class LobbyListener implements Listener {
         if (event.getDamager() instanceof Player) {
             if (event.getEntity() instanceof Player || event.getEntity() != null) {
                 Player damager = (Player) event.getDamager();
-                if ( thorn.getGameManager().getMods().contains(damager.getUniqueId())) {
+                if (thorn.getGameManager().getMods().contains(damager.getUniqueId())) {
                     event.setCancelled(true);
                 }
             }
@@ -170,7 +199,7 @@ public class LobbyListener implements Listener {
 
         for (UHCPlayer online : thorn.getGameManager().getPlayers()) {
             if (online.isOnline()) {
-                if (! thorn.getGameManager().getMods().contains(online.getPlayer().getUniqueId())) {
+                if (!thorn.getGameManager().getMods().contains(online.getPlayer().getUniqueId())) {
                     try {
                         ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                         SkullMeta meta = (SkullMeta) item.getItemMeta();

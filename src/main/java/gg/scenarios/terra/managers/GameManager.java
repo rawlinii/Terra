@@ -90,6 +90,8 @@ public class GameManager {
         this.pvp = PVP;
         World world = Bukkit.getWorld("uhc");
         world.setPVP(true);
+        World uhcNether = Bukkit.getWorld("uhc_nether");
+        uhcNether.setPVP(true);
     }
 
 

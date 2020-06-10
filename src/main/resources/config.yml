@@ -19,3 +19,4 @@ mongo:
   uri: ''
   database: 'Terra'
   stats: 'stats'
+  profiles: 'profile'

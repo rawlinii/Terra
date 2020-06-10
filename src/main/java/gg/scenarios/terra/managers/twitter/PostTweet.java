@@ -27,7 +27,7 @@ public class PostTweet {
         this.mins = mins;
         slots = 100;
         this.teamSize = teamSizeToString();
-        this.host = uhc.getGameManager().getHost().getPlayer().getName();
+        this.host = uhc.getGameManager().getHostingName();
         this.description= " ";
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
@@ -45,13 +45,15 @@ public class PostTweet {
     private String teamSizeToString() {
         if (uhc.getGameManager().getTeamState() == TeamState.SOLO) {
             return "FFA";
-        }else if (uhc.getGameManager().getTeamState() == TeamState.SLAVEMARKET) {
+        } else if (uhc.getGameManager().getTeamState() == TeamState.SLAVEMARKET) {
             return "Slave Market";
-        }else if (uhc.getGameManager().getTeamState() == TeamState.RvB){
+        } else if (uhc.getGameManager().getTeamState() == TeamState.RvB) {
             return "RvB";
-        }else if (uhc.getGameManager().getTeamState() == TeamState.RvGvBvY){
+        } else if (uhc.getGameManager().getTeamState() == TeamState.RvGvBvY) {
             return "RvGvBvY";
-        }else {
+        } else if (uhc.getGameManager().getTeamState() == TeamState.RANDOM) {
+            return "rTo"+uhc.getGameManager().getTeamSize();
+        } else {
             return "To" + uhc.getGameManager().getTeamSize();
         }
     }

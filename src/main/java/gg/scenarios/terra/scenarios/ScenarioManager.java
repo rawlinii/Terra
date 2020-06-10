@@ -36,6 +36,7 @@ public class ScenarioManager {
         scenarios.add(new InfiniteEnchanter());
         scenarios.add(new SpeedShot());
         scenarios.add(new BleedingSweets());
+        scenarios.add(new SkyHigh());
         scenarios.add(new Superheros());
         scenarios.add(new NoFall());
 

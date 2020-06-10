@@ -24,7 +24,7 @@ public class Reference {
 
     public String arrow = "§8»";
 
-    private String main, pvp, scenario, error, border, team, staff, death;
+    private String main, pvp, scenario, error, border, team, staff, death, uri, mongoDb, mongoStats, mongoProfile;
     private World world = Bukkit.getWorld("uhc");
     public final Location SPAWN = new Location(world, world.getSpawnLocation().getX(), world.getSpawnLocation().getY(), world.getSpawnLocation().getZ(), -90, 0);
     private String tAccess;
@@ -44,7 +44,10 @@ public class Reference {
 
         this.tAccess = getConfig().getString("twitter.token");
         this.tSecret = getConfig().getString("twitter.secret");
-
+        this.uri = getConfig().getString("mongo.uri");
+        this.mongoDb = getConfig().getString("mongo.database");
+        this.mongoStats = getConfig().getString("mongo.stats");
+        this.mongoProfile = getConfig().getString("mongo.profiles");
 
     }
 }

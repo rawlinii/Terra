@@ -61,7 +61,7 @@ public class RandomTeamsTask {
 
     private void addToTeam(Team team, Player player) {
         terra.getTeams().joinTeam(team.getName(), player);
-        terra.getUtils().broadcast(terra.getReference().getTeam()  + team.getPrefix() + player.getName());
+        terra.getUtils().broadcast(terra.getReference().getTeam() + "&7- " + team.getPrefix() + player.getName());
     }
 
     public void stopScheduler() {
