@@ -2,15 +2,18 @@ package gg.scenarios.terra.commands;
 
 import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.managers.profiles.UHCPlayer;
+import gg.scenarios.terra.utils.GuiBuilder;
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.json.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -42,30 +45,31 @@ public class WhiteListCommand implements CommandExecutor {
                     } else if (args[0].equals("on")) {
                         uhc.getGameManager().setWhitelistEnabled(true);
                         player.sendMessage(ChatColor.YELLOW + "You have " + ChatColor.LIGHT_PURPLE + "enabled" + ChatColor.YELLOW + " the whitelist");
-                    } else if (args[0].equalsIgnoreCase("off")) {
-                        uhc.getGameManager().setWhitelistEnabled(false);
-                        player.sendMessage(ChatColor.YELLOW + "You have " + ChatColor.LIGHT_PURPLE + "disabled" + ChatColor.YELLOW + " the whitelist");
-                    } else if (args[0].equalsIgnoreCase("add")) {
-                        if (args[1] == null){
-                            player.sendMessage(ChatColor.YELLOW + "please enter a username");
 
-                        }else {
-                            uhc.getGameManager().getWhitelist().add(UUID.fromString(insertDashUUID(getUUID(args[1]))));
-                            //Utils.getOfflinePlayer(args[1], offlinePlayer -> uhc.getGameManager().getWhitelist().add(offlinePlayer.getUniqueId()));
-                            player.sendMessage(ChatColor.YELLOW + "You have added " + ChatColor.LIGHT_PURPLE + args[1] + ChatColor.YELLOW + " to the whitelist");
-                        }
-                    } else if (args[0].equalsIgnoreCase("all")) {
-                        uhc.getGameManager().getWhitelist().removeAll(uhc.getGameManager().getWhitelist());
-                        uhc.getGameManager().getPlayers().stream().filter(UHCPlayer::isOnline).forEach(uuid -> {
-                            uhc.getGameManager().getWhitelist().add(uuid.getPlayer().getUniqueId());
-                            count++;
-                        });
-                        uhc.getGameManager().getPlayers().removeAll(uhc.getGameManager().getPlayers());
+                    }else if (args[0].equalsIgnoreCase("off")) {
+                            uhc.getGameManager().setWhitelistEnabled(false);
+                            player.sendMessage(ChatColor.YELLOW + "You have " + ChatColor.LIGHT_PURPLE + "disabled" + ChatColor.YELLOW + " the whitelist");
+                        } else if (args[0].equalsIgnoreCase("add")) {
+                            if (args[1] == null){
+                                player.sendMessage(ChatColor.YELLOW + "please enter a username");
 
-                        Predicate<UUID> predicate = uuid -> UHCPlayer.getByUUID(uuid).isInLobby();
-                        uhc.getGameManager().getWhitelist().stream().filter(predicate).forEach(uuid -> {
-                            uhc.getGameManager().getPlayers().add(UHCPlayer.getByUUID(uuid));
-                        });
+                            }else {
+                                uhc.getGameManager().getWhitelist().add(UUID.fromString(insertDashUUID(getUUID(args[1]))));
+                                //Utils.getOfflinePlayer(args[1], offlinePlayer -> uhc.getGameManager().getWhitelist().add(offlinePlayer.getUniqueId()));
+                                player.sendMessage(ChatColor.YELLOW + "You have added " + ChatColor.LIGHT_PURPLE + args[1] + ChatColor.YELLOW + " to the whitelist");
+                            }
+                        } else if (args[0].equalsIgnoreCase("all")) {
+                            uhc.getGameManager().getWhitelist().removeAll(uhc.getGameManager().getWhitelist());
+                            uhc.getGameManager().getPlayers().stream().filter(UHCPlayer::isOnline).forEach(uuid -> {
+                                uhc.getGameManager().getWhitelist().add(uuid.getPlayer().getUniqueId());
+                                count++;
+                            });
+                            uhc.getGameManager().getPlayers().removeAll(uhc.getGameManager().getPlayers());
+
+                            Predicate<UUID> predicate = uuid -> UHCPlayer.getByUUID(uuid).isInLobby();
+                            uhc.getGameManager().getWhitelist().stream().filter(predicate).forEach(uuid -> {
+                                uhc.getGameManager().getPlayers().add(UHCPlayer.getByUUID(uuid));
+                            });
 //                        uhc.getGameManager().getWhitelist().forEach(uuid -> {
 //                            if (UHCPlayer.getByUUID(uuid).isOnline()) {
 //                                if (UHCPlayer.getByUUID(uuid).isSpectating()) {
@@ -78,10 +82,11 @@ public class WhiteListCommand implements CommandExecutor {
 //                                }
 //                            }
 //                        });
-                        player.sendMessage(ChatColor.YELLOW + "You have added " + ChatColor.LIGHT_PURPLE + uhc.getGameManager().getPlayers().size() + ChatColor.YELLOW + " players to the whitelist");
+                            player.sendMessage(ChatColor.YELLOW + "You have added " + ChatColor.LIGHT_PURPLE + uhc.getGameManager().getPlayers().size() + ChatColor.YELLOW + " players to the whitelist");
 
-                    }
-                } else {
+                        }
+
+                    } else {
                     player.sendMessage("no perm kiddo");
                 }
             }

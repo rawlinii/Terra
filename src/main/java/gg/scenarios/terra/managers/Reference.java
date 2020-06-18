@@ -19,7 +19,7 @@ public class Reference {
     private FileConfiguration config;
 
     public ChatColor primColor = ChatColor.GRAY;
-    public ChatColor secColor = ChatColor.GOLD;
+    public ChatColor secColor = ChatColor.RED;
 
 
     public String arrow = "§8»";

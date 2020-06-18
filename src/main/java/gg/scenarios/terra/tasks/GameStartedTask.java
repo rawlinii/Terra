@@ -54,9 +54,9 @@ public class GameStartedTask {
             }
 
             Bukkit.getOnlinePlayers().forEach(p ->{
-                main.getNms().sendTablist(p, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC +"@ScenariosUHC \n" +
+                main.getNms().sendTablist(p, ChatColor.RED + "" + ChatColor.BOLD + "Cupid.gg" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.RED + ChatColor.ITALIC +"@CupidGameFeed \n" +
                         ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
-                        ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n"+ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "Scenarios: " + ChatColor.GOLD +
+                        ChatColor.GRAY + "Ping: " + ChatColor.RED + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n"+ChatColor.RED + "" + ChatColor.BOLD + "Cupid.gg" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "Scenarios: " + ChatColor.RED +
                         createScenarios());
             });
 

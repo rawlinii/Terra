@@ -21,3 +21,6 @@ commands:
     aliases: [bp]
   invsee:
   tp:
+  alerts:
+  lagmachine:
+  list:

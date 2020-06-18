@@ -1,6 +1,7 @@
 package gg.scenarios.terra.commands;
 
 import gg.scenarios.terra.Terra;
+import gg.scenarios.terra.managers.profiles.UHCPlayer;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -19,7 +20,7 @@ public class HelpopCommand implements CommandExecutor {
 
     private Terra terra = Terra.getInstance();
 
-    private static int helpOp =1;
+    private static int helpOp = 1;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
@@ -38,11 +39,12 @@ public class HelpopCommand implements CommandExecutor {
                 for (UUID uuid : terra.getGameManager().getMods()) {
                     Player mod = Bukkit.getPlayer(uuid);
                     if (mod != null) {
-                        TextComponent msg = new TextComponent( ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED +" " + ChatColor.BOLD +"Helpop #" + helpOp +ChatColor.DARK_GRAY +"] " + ChatColor.WHITE +player.getName() + ChatColor.GOLD + " - " +ChatColor.GRAY + message);
-                        msg.setClickEvent( new ClickEvent( ClickEvent.Action.SUGGEST_COMMAND, "/rhelpop " + player.getName() + " " ) );
-                        msg.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( "Click to reply to this helpop!" ).create()));
-                        mod.spigot().sendMessage(msg);
-
+                        if (UHCPlayer.getByName(mod.getName()).isHelpOpAlerts()) {
+                            TextComponent msg = new TextComponent(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + " " + ChatColor.BOLD + "Helpop #" + helpOp + ChatColor.DARK_GRAY + "] " + ChatColor.WHITE + player.getName() + ChatColor.GOLD + " - " + ChatColor.GRAY + message);
+                            msg.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/rhelpop " + player.getName() + " "));
+                            msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to reply to this helpop!").create()));
+                            mod.spigot().sendMessage(msg);
+                        }
                     }
                 }
                 helpOp++;

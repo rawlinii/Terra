@@ -2,6 +2,7 @@ package gg.scenarios.terra.tasks;
 
 import gg.scenarios.terra.Terra;
 import gg.scenarios.terra.events.GameStartEvent;
+import gg.scenarios.terra.events.GameStateChangeEvent;
 import gg.scenarios.terra.managers.GameManager;
 import gg.scenarios.terra.managers.GameState;
 import gg.scenarios.terra.managers.Reference;
@@ -76,7 +77,7 @@ public class GameStartTask {
                 });
                 new GameStartedTask();
                 gameManager.setGameState(GameState.STARTED);
-//                Bukkit.getPluginManager().callEvent(new GameStateChangeEvent(gameManager.getGameState()));
+                Bukkit.getPluginManager().callEvent(new GameStateChangeEvent(gameManager.getGameState()));
                 Bukkit.getPluginManager().callEvent(new GameStartEvent((ArrayList<UHCPlayer>) gameManager.getPlayers()));
 
                 stopScheduler();

@@ -198,11 +198,6 @@ public class Utils {
                 Bukkit.broadcastMessage("§bStarted loading the world " + world.getName());
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " set " + radius + " " + radius + " 0 0");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb shape square");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb uhc_nether set 500 500 0 0");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + nether + " fill 1700");
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + nether + " fill confirm");
-
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " fill 1700");
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "wb " + name + " fill confirm");
             }

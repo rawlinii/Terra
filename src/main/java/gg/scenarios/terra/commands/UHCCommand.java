@@ -8,16 +8,18 @@ import gg.scenarios.terra.managers.profiles.UHCPlayer;
 import gg.scenarios.terra.scenarios.Scenario;
 import gg.scenarios.terra.tasks.*;
 import gg.scenarios.terra.utils.ConfigOptions;
+import gg.scenarios.terra.utils.GuiBuilder;
 import gg.scenarios.terra.utils.HotBarMessage;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import gg.scenarios.terra.utils.ItemCreator;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Arrays;
 
 public class UHCCommand implements CommandExecutor {
 
@@ -52,10 +54,12 @@ public class UHCCommand implements CommandExecutor {
                     player.performCommand("heal all");
                     player.performCommand("whitelist all");
                     player.performCommand("whitelist on");
-                    if (uhc.getGameManager().getTeamState() == TeamState.TEAM){
+                    Bukkit.getServer().getOnlinePlayers().forEach(player1 -> player1.getInventory().clear());
+                    if (uhc.getGameManager().getTeamState() == TeamState.TEAM) {
                         uhc.getGameManager().getPlayers().stream().filter(UHCPlayer::isOnline).filter(UHCPlayer::isInLobby).forEach(uhcPlayer -> {
                             uhcPlayer.getPlayer().performCommand("team create");
-                        });}
+                        });
+                    }
                     new PrepareGameTask();
                 } else if (args[0].equalsIgnoreCase("config")) {
                     player.openInventory(ConfigOptions.config());
@@ -111,16 +115,90 @@ public class UHCCommand implements CommandExecutor {
                         Location location = new Location(Bukkit.getWorld("uhc"), 0, 100, 0);
                         player.teleport(location);
                     }
-                }else if (args[0].equalsIgnoreCase("rvb")){
-                    player.sendMessage(ChatColor.GRAY + "Starting RvB Assignment");
-                    new RvBTask();
-                }else if (args[0].equalsIgnoreCase("rvgvbvy")){
-                    player.sendMessage(ChatColor.GRAY + "Starting RvB Assignment");
-                    new RvGvBvYTask();
-                }else {
-                    if (args[0].equalsIgnoreCase("randomteams")) {
-                        player.sendMessage(ChatColor.GRAY + "Starting Random Team Assignment");
+                } else if (args[0].equalsIgnoreCase("teams")) {
+                    GuiBuilder guiBuilder = new GuiBuilder();
+                    guiBuilder.name("&aUHC Teams Settings");
+                    guiBuilder.rows(3);
+                    guiBuilder.item(0, new ItemCreator(Material.STAINED_GLASS, 3).setName("&6Random &7Teams").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(9, new ItemCreator(Material.STAINED_GLASS, 6).setName("&cR&7v&bB &7Teams").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(18, new ItemCreator(Material.STAINED_GLASS, 4).setName("&cR&7v&aG&7v&bB&7v&eY &7Teams").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(6, new ItemCreator(Material.STAINED_GLASS, 1).setName("&7Auction").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(15, new ItemCreator(Material.STAINED_GLASS, 2).setName("&7Captains").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(24, new ItemCreator(Material.STAINED_GLASS, 1).setName("&7Picked").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(3, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(4, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(5, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(12, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(13, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(14, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(21, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(22, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+                    guiBuilder.item(23, new ItemCreator(Material.GLASS).setName(" ").get()).onClick(event -> event.setCancelled(true));
+
+
+                    guiBuilder.item(7, new ItemCreator(Material.PAPER).setName("&7Set Game to &7Auction").setLore(Arrays.asList("&6&LNOTE: ADMIN&^")).get()).onClick(event -> {
+                        event.setCancelled(true);
+                        uhc.getGameManager().setTeamState(TeamState.SLAVEMARKET);
+                        player.sendMessage(ChatColor.GRAY + "Teams have been set to Auction");
+                    });
+
+                    guiBuilder.item(16, new ItemCreator(Material.PAPER).setName("&7Set Game to &7Captains").setLore(Arrays.asList("&6&LNOTE: ADMIN&^")).get()).onClick(event -> {
+                        event.setCancelled(true);
+                        uhc.getGameManager().setTeamState(TeamState.CAPTAINS);
+                        player.sendMessage(ChatColor.GRAY + "Teams have been set to Auction");
+                    });
+                    guiBuilder.item(25, new ItemCreator(Material.PAPER).setName("&7Set Game to &7Picked").setLore(Arrays.asList("&6&LNOTE: ADMIN&^")).get()).onClick(event -> {
+                        event.setCancelled(true);
+                        uhc.getGameManager().setTeamState(TeamState.SLAVEMARKET);
+                        player.sendMessage(ChatColor.GRAY + "Teams have been set to Picked");
+                    });
+                    guiBuilder.item(1, new ItemCreator(Material.PAPER).setName("&7Set Game to &6Random &7Teams").get()).onClick(event -> {
+                        event.setCancelled(true);
+                        uhc.getGameManager().setTeamState(TeamState.RANDOM);
+                        player.sendMessage(ChatColor.GRAY + "Teams have been set to Random");
+                    });
+                    guiBuilder.item(10, new ItemCreator(Material.PAPER).setName("&7Set Game to &cR&7v&bB &7Teams").get()).onClick(event -> {
+                        event.setCancelled(true);
+                        uhc.getGameManager().setTeamState(TeamState.RvB);
+                        player.sendMessage(ChatColor.GRAY + "Teams have been set to RvB");
+                    });
+                    guiBuilder.item(19, new ItemCreator(Material.PAPER).setName("&7Set Game to &cR&7v&aG&7v&bB&7v&eY &7Teams").get()).onClick(event -> {
+                        event.setCancelled(true);
+                        player.sendMessage(ChatColor.GRAY + "Teams have been set to RvBvGvY");
+                    });
+                    guiBuilder.item(2, new ItemCreator(Material.BEACON).setName("&7Generate &6Random &7Teams").get()).onClick(event -> {
+                        event.setCancelled(true);
                         new RandomTeamsTask();
+                    });
+                    guiBuilder.item(11, new ItemCreator(Material.BEACON).setName("&7Generate &cR&7v&bB &7Teams").get()).onClick(event -> {
+                        event.setCancelled(true);
+                        new RvBTask();
+                    });
+                    guiBuilder.item(20, new ItemCreator(Material.BEACON).setName("&7Generate &cR&7v&aG&7v&bB&7v&eY &7Teams").get()).onClick(event -> {
+                        event.setCancelled(true);
+                        new RvGvBvYTask();
+                    });
+                    guiBuilder.item(8, new ItemCreator(Material.BEACON).setName("&7Start &6Auction").setLore(Arrays.asList("&6&LNOTE: ADMIN&^")).get()).onClick(event -> {
+                        event.setCancelled(true);
+                        new AuctionTask(); //TODO: Make this work
+                    });
+                    guiBuilder.item(17, new ItemCreator(Material.BEACON).setName("&7Start &6Captains").setLore(Arrays.asList("&6&LNOTE: ADMIN&^")).get()).onClick(event -> {
+                        event.setCancelled(true);
+                        //TODO: MAKE CAPTAINS
+                    });
+                    guiBuilder.item(26, new ItemCreator(Material.BEACON).setName("&7Started &6Picked").setLore(Arrays.asList("&6&LNOTE: ADMIN&^")).get()).onClick(event -> {
+                        event.setCancelled(true);
+                        //TODO: START PICKED
+                    });
+
+                    player.openInventory(guiBuilder.make());
+
+                } else if (args[0].equalsIgnoreCase("slots")) {
+                    if (args[1] == null){
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', uhc.getReference().getError() + "&7Please specify a &6number&7."));
+                    }else{
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', uhc.getReference().getMain() + "&7Set slots to &6" + args[1] + "&7."));
+
                     }
                 }
             } else {

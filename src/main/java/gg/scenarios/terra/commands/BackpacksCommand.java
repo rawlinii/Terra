@@ -20,30 +20,32 @@ public class BackpacksCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (Terra.getInstance().getScenarioManager().getScenarioByName("Backpacks").isEnabled()) {
-                if (Terra.getInstance().getGameManager().getTeamState() == TeamState.TEAM && Terra.getInstance().getGameManager().getGameState() == GameState.STARTED) {
-                    if (args.length == 0) {
-                        Team team = Terra.getInstance().getTeams().getTeam(player);
-                        Inventory teamInv = Backpacks.backpacks.get(team);
-                        if (teamInv == null) {
-                            Inventory ti = Bukkit.createInventory(null, 27, ChatColor.RED + "Backpack");
-                            Backpacks.backpacks.put(team, ti);
-                            player.openInventory(ti);
-                        } else {
-                            player.openInventory(teamInv);
-                        }
-                    } else {
-                        if (player.hasPermission("backpack.open.other")) {
-                            Team team = Terra.getInstance().getTeams().getTeam(Bukkit.getPlayer(args[1]));
+                if (Terra.getInstance().getGameManager().getGameState() == GameState.STARTED) {
+                    if (Terra.getInstance().getGameManager().getTeamState() == TeamState.SOLO){
+                        player.sendMessage(ChatColor.RED + "This is not a teamgame.");
+                    }else {
+                        if (args.length == 0) {
+                            Team team = Terra.getInstance().getTeams().getTeam(player);
                             Inventory teamInv = Backpacks.backpacks.get(team);
                             if (teamInv == null) {
-                                player.sendMessage(ChatColor.RED + "That player has no backpack!");
+                                Inventory ti = Bukkit.createInventory(null, 27, ChatColor.RED + "Backpack");
+                                Backpacks.backpacks.put(team, ti);
+                                player.openInventory(ti);
                             } else {
                                 player.openInventory(teamInv);
                             }
+                        } else {
+                            if (player.hasPermission("backpack.open.other")) {
+                                Team team = Terra.getInstance().getTeams().getTeam(Bukkit.getPlayer(args[0]));
+                                Inventory teamInv = Backpacks.backpacks.get(team);
+                                if (teamInv == null) {
+                                    player.sendMessage(ChatColor.RED + "That player has no backpack!");
+                                } else {
+                                    player.openInventory(teamInv);
+                                }
+                            }
                         }
                     }
-                } else {
-                    player.sendMessage(ChatColor.RED + "This is not a teamgame.");
                 }
             } else {
                 player.sendMessage(ChatColor.RED + "Backpacks is not enabled.");

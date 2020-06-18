@@ -49,6 +49,8 @@ public class UHCPlayer {
 
     private boolean xrayAlerts = true;
     private boolean pvpAlerts = true;
+    private boolean helpOpAlerts = true;
+    private boolean pveAlerts = true;
     private Statistics statistics = new Statistics();
 
     private boolean teamChat = true;

@@ -109,7 +109,8 @@ public class PlayerListener implements Listener {
                     PotionEffect re = new PotionEffect(PotionEffectType.REGENERATION, 200, 1);
 
                     re.apply(p);
-                } else {
+                }
+                if (!gameManager.isAbsorption()){
                     p.removePotionEffect(PotionEffectType.ABSORPTION);
                 }
             }
@@ -166,7 +167,6 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        event.setDeathMessage(null);
         gameManager.getPlayers().remove(UHCPlayer.getByUUID(event.getEntity().getUniqueId()));
     }
 
@@ -237,10 +237,12 @@ public class PlayerListener implements Listener {
         Player player = uhcPlayer.getPlayer();
         if (gameManager.getGameState().equals(GameState.STARTED)) {
             if (uhcPlayer.isAlive()) {
-                Logger logger = new Logger(uhcPlayer);
-                uhcPlayer.setLogger(logger);
+                if (gameManager.getMods().contains(player.getUniqueId())) {
+                } else {
+                    Logger logger = new Logger(uhcPlayer);
+                    uhcPlayer.setLogger(logger);
+                }
             }
-
         }
     }
 
@@ -329,9 +331,9 @@ public class PlayerListener implements Listener {
             } else {
                 matchPost = gameManager.getMatchPost();
             }
-            terra.getNms().sendTablist(player, ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.BLUE + ChatColor.ITALIC + "@ScenariosUHC \n" +
+            terra.getNms().sendTablist(player, ChatColor.RED + "" + ChatColor.BOLD + "Cupid.GG" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.RED + ChatColor.ITALIC + "@CupidGameFeed \n" +
                     ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
-                    ChatColor.GRAY + "Ping: " + ChatColor.GOLD + ((CraftPlayer) player).getHandle().ping + "ms \n", "\n" + ChatColor.GOLD + "" + ChatColor.BOLD + "ScenariosUHC" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
+                    ChatColor.GRAY + "Ping: " + ChatColor.RED + ((CraftPlayer) player).getHandle().ping + "ms \n", "\n" + ChatColor.RED + "" + ChatColor.BOLD + "Cupid.gg" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
                     "No Match Scheduled");
 
             if (gameManager.getGameState().equals(GameState.STARTED)) {
@@ -433,7 +435,6 @@ public class PlayerListener implements Listener {
         if (player.getKiller() != null) {
             Player p = (Player) event.getEntity();
             Player target = player.getKiller();
-            terra.getUtils().broadcast(reference.secColor + player.getName() + reference.primColor + " was slain by " + reference.secColor + target.getName());
             UHCPlayer uhcPlayer = UHCPlayer.getByName(player.getName());
             uhcPlayer.setDeathLocation(player.getLocation());
             uhcPlayer.setInventory(player.getInventory().getContents());
@@ -469,7 +470,6 @@ public class PlayerListener implements Listener {
             uhcPlayer.setLevels(player.getLevel());
             uhcPlayer.getStatistics().getDeaths().increment();
             terra.getGameManager().getPlayers().remove(uhcPlayer);
-            terra.getUtils().broadcast(reference.secColor + player.getName() + reference.primColor + " was killed ");
             if (!terra.getScenarioManager().getScenarioByName("Timebomb").isEnabled() || !terra.getScenarioManager().getScenarioByName("Golden Retriever").isEnabled()) {
                 player.getWorld().getBlockAt(player.getLocation()).setType(Material.NETHER_FENCE);
                 player.getWorld().getBlockAt(player.getLocation().add(0.0, 1.0, 0.0)).setType(Material.SKULL);

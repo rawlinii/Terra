@@ -71,14 +71,14 @@ public class PostTweet {
     }
 
     private String createTweet() {
-        return "Upcoming Scenarios Match\n" +
+        return "Upcoming CupidUHC Match\n" +
                 "\n" +
                 "- " + teamSize + " " +createScenarios() + "\n" +
                 "- Opens at: " + uhc.getGameManager().getMatch().getMatchTime().getHour() + ":" + uhc.getGameManager().getMatch().getMatchTime().getMinute() + " ("+ mins+"m)\n" +
                 "\n" +
                 "- Matchpost: " + uhc.getGameManager().getMatchPost() + "\n" +
                 "\n" +
-                "- IP: na.scenarios.gg\n" +
+                "- IP: na.cupid.gg\n" +
                 "- Region: NA\n" +
                 "\n" +
                 "- Host: " + host +"\n";

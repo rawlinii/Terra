@@ -51,6 +51,11 @@ public class ItemCreator {
         return this;
     }
 
+    public ItemCreator addDigSpeed() {
+        itemStack.addUnsafeEnchantment(Enchantment.DIG_SPEED, 4);
+        return this;
+    }
+
     public ItemCreator addEnchants(List<String> enchants) {
         if (enchants != null) {
             enchants.forEach(enchant -> {

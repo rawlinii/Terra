@@ -5,10 +5,7 @@ import com.google.gson.Gson;
 import gg.scenarios.terra.commands.*;
 //import gg.scenarios.terra.database.Mongo;
 import gg.scenarios.terra.database.Redis;
-import gg.scenarios.terra.listeners.LobbyListener;
-import gg.scenarios.terra.listeners.PlayerListener;
-import gg.scenarios.terra.listeners.ScenarioInventoryEvent;
-import gg.scenarios.terra.listeners.SpecListener;
+import gg.scenarios.terra.listeners.*;
 import gg.scenarios.terra.managers.GameManager;
 import gg.scenarios.terra.managers.Gameboard;
 import gg.scenarios.terra.managers.Reference;
@@ -16,6 +13,7 @@ import gg.scenarios.terra.nms.NMS;
 import gg.scenarios.terra.nms.verisons.v1_8_R3;
 import gg.scenarios.terra.scenarios.ScenarioManager;
 import gg.scenarios.terra.managers.teams.Teams;
+import gg.scenarios.terra.utils.GuiBuilder;
 import gg.scenarios.terra.utils.Utils;
 import gg.scenarios.terra.world.BiomeSwap;
 import gg.scenarios.terra.world.IncreasedCaneRates;
@@ -86,7 +84,7 @@ public class Terra extends JavaPlugin implements Listener {
         teams.setupTeams();
         regCommands();
         regListeners();
-        utils.setMOTD(ChatColor.translateAlternateColorCodes('&', "       &8&l - / / &4&lScenarios&e&lUHC &7(&a1.8.X)&8&l \\ \\ -                 &7@ScenariosUHC "));
+        utils.setMOTD(ChatColor.translateAlternateColorCodes('&',  "               &d&lCUPID&4UHC &7» &8[&d1.8&8]\n            &bTwitter &7» &c@CupidGameFeed"));
         gameboard = new Gameboard();
         Bukkit.getScheduler().runTaskLater(this, () -> {
             joinable = true;
@@ -105,6 +103,7 @@ public class Terra extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new SpecListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new ScenarioInventoryEvent(), this);
+        getServer().getPluginManager().registerEvents(new SpleefListener(this), this);
         getServer().getPluginManager().registerEvents(new LobbyListener(), this);
     }
 
@@ -160,6 +159,9 @@ public class Terra extends JavaPlugin implements Listener {
         getCommand("tc").setExecutor(new TeamChatCommand());
         getCommand("backpacks").setExecutor(new BackpacksCommand());
         getCommand("invsee").setExecutor(new InvseeCommand());
+        getCommand("alerts").setExecutor(new AlertsCommand());
+        getCommand("lagmachine").setExecutor(new LagMachineCommand());
+        getCommand("list").setExecutor(new ListCommand(this));
         getCommand("tp").setExecutor(new TpCommand(this));
     }
 }

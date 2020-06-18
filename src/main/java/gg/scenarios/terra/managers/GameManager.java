@@ -114,18 +114,14 @@ public class GameManager {
     @Override
     public String toString() {
         return "GameManager{" +
-                "terra=" + terra +
                 ", matchPost='" + matchPost + '\'' +
                 ", random=" + random +
                 ", whitelistedChunks=" + whitelistedChunks +
-                ", scatterLocations=" + Arrays.toString(scatterLocations) +
                 ", host=" + host +
                 ", startingFall=" + startingFall +
                 ", gameState=" + gameState +
                 ", teamState=" + teamState +
                 ", teamSize=" + teamSize +
-                ", players=" + players +
-                ", slaves=" + slaves +
                 ", whitelist=" + whitelist +
                 ", mods=" + mods +
                 ", hosts=" + hosts +

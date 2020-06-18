@@ -72,7 +72,7 @@ public class Gameboard {
         if (sb.getObjective("HP2") == null) {
             heal2 = sb.registerNewObjective("HP2", "dummy");
         }
-        kills.setDisplayName("§7§o@ScenariosUHC");
+        kills.setDisplayName("§c§o@CupidGameFeed");
         kills.setDisplaySlot(DisplaySlot.SIDEBAR);
         heal.setDisplaySlot(DisplaySlot.PLAYER_LIST);
         heal2.setDisplaySlot(DisplaySlot.BELOW_NAME);

@@ -89,7 +89,7 @@ public class SpecListener implements Listener {
 
         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                if (UHCPlayer.getByName(online.getName()).isXrayAlerts()) {
                     online.sendMessage("[§9S§f] §7" + player.getPlayerListName() + " §7» §bDiamond §f[V:§b" + amount + "§f] [T:§b" + totalD.get(player.getName()) + "§f]");
                 }
             }
@@ -124,7 +124,7 @@ public class SpecListener implements Listener {
 
         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                if (UHCPlayer.getByName(online.getName()).isXrayAlerts()) {
                     online.sendMessage("[§9S§f] §7" + player.getPlayerListName() + " §7» §6Gold §f[V:§6" + amount + "§f] [T:§6" + totalG.get(player.getName()) + "§f]");
                 }
             }
@@ -144,7 +144,7 @@ public class SpecListener implements Listener {
 
             for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                 if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                    if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                    if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                         online.sendMessage("[§9S§f] §5Pearl:§6" + player.getName() + "§f->§d" + convertHealth(event.getFrom().distance(event.getTo())) + " blocks.");
                     }
                 }
@@ -189,7 +189,7 @@ public class SpecListener implements Listener {
             if (!event.getFrom().getName().equals("world") && !player.getWorld().getName().equals("world")) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §dPortal:§6" + player.getName() + "§f from §a" + event.getFrom().getName() + "§f to §c" + player.getWorld().getName());
                         }
                     }
@@ -211,7 +211,7 @@ public class SpecListener implements Listener {
 
             for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                 if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                    if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                    if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                         online.sendMessage("[§9S§f] §aHeal: §6" + player.getName() + "§f<->§6" + (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Golden Head") ? "§5Golden Head" : "Golden Apple"));
                     }
                 }
@@ -233,7 +233,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.GOLDEN_APPLE) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§6" + (item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Golden Head") ? "§5Golden Head" : "Golden Apple"));
                         }
                     }
@@ -243,7 +243,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.DIAMOND_HELMET) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§bDia. Helmet");
                         }
                     }
@@ -253,7 +253,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.DIAMOND_CHESTPLATE) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§bDia. Chest");
                         }
                     }
@@ -263,7 +263,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.DIAMOND_LEGGINGS) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§bDia. Leggings");
                         }
                     }
@@ -273,7 +273,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.DIAMOND_BOOTS) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§bDia. Boots");
                         }
                     }
@@ -283,7 +283,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.BOW) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§bBow");
                         }
                     }
@@ -293,7 +293,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.DIAMOND_SWORD) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§bDia. Sword");
                         }
                     }
@@ -303,7 +303,9 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.ANVIL) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§dAnvil");
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
+                            online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§dAnvil");
+                        }
                     }
                 }
             }
@@ -311,7 +313,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.ENCHANTMENT_TABLE) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§dEnchant. Table");
                         }
                     }
@@ -321,7 +323,7 @@ public class SpecListener implements Listener {
             if (item.getType() == Material.BREWING_STAND_ITEM) {
                 for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                     if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                        if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                        if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                             online.sendMessage("[§9S§f] §2Craft§f: §a" + player.getName() + "§f<->§dBrewing Stand");
                         }
                     }
@@ -356,7 +358,7 @@ public class SpecListener implements Listener {
                     if (cause == DamageCause.LAVA) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dLava §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -364,7 +366,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.FIRE || cause == DamageCause.FIRE_TICK) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dFire §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -372,7 +374,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.CONTACT) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
 
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dCactus §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
@@ -381,7 +383,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.DROWNING) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dDrowning §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -389,7 +391,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.FALL) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dFall §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -397,7 +399,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.LIGHTNING) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dLightning §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -405,7 +407,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.MAGIC) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dMagic §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -413,7 +415,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.POISON) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dPoison §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -421,7 +423,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.STARVATION) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dStarving §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -429,7 +431,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.SUFFOCATION) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dSuffocation §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -437,7 +439,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.VOID) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dVoid §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -445,7 +447,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.WITHER) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dWither §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -453,7 +455,7 @@ public class SpecListener implements Listener {
                     } else if (cause == DamageCause.BLOCK_EXPLOSION) {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§dTNT §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
@@ -461,7 +463,7 @@ public class SpecListener implements Listener {
                     } else {
                         for (Player online : Bukkit.getServer().getOnlinePlayers()) {
                             if (main.getGameManager().getMods().contains(online.getUniqueId())) {
-                                if (UHCPlayer.getByName(online.getName()).isPvpAlerts()) {
+                                if (UHCPlayer.getByName(online.getName()).isPveAlerts()) {
                                     online.sendMessage("[§9S§f] §5PvE§f:§c" + player.getName() + "§f<-§d??? §f[§c" + convertHealth((dmg.getHealth() / 2)) + "§f] [§6" + convertHealth((damage / 2)) + "§f]");
                                 }
                             }
