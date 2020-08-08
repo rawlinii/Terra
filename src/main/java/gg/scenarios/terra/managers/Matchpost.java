@@ -44,19 +44,18 @@ public class Matchpost {
         int pvpEnabledAt = response.getBody().getObject().getInt("pvpEnabledAt");
         terra.getGameManager().setPvpTime(pvpEnabledAt);
 
-        if (response.getBody().getObject().getString("teams").equalsIgnoreCase("chosen")){
+        if (response.getBody().getObject().getString("teams").equalsIgnoreCase("chosen")) {
             terra.getGameManager().setTeamState(TeamState.TEAM);
             terra.getGameManager().setTeamSize(response.getBody().getObject().getInt("size"));
-        }else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("custom")){
-            if (response.getBody().getObject().getString("customStyle").equalsIgnoreCase("RvGvBvY")){
+        } else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("custom")) {
+            if (response.getBody().getObject().getString("customStyle").equalsIgnoreCase("RvGvBvY")) {
                 terra.getGameManager().setTeamState(TeamState.RvGvBvY);
                 terra.getGameManager().setTeamSize(0);
-
             }
-        }else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("rvb")){
+        } else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("rvb")) {
             terra.getGameManager().setTeamState(TeamState.RvB);
             terra.getGameManager().setTeamSize(0);
-        }else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("random")){
+        } else if (response.getBody().getObject().getString("teams").equalsIgnoreCase("random")) {
             terra.getGameManager().setTeamState(TeamState.RANDOM);
             terra.getGameManager().setTeamSize(response.getBody().getObject().getInt("size"));
         }
@@ -64,12 +63,12 @@ public class Matchpost {
         terra.getGameManager().setBorderTime(response.getBody().getObject().getInt("length") - 15);
         terra.getGameManager().setMeetupTime(response.getBody().getObject().getInt("length"));
         terra.getGameManager().setHostingName(response.getBody().getObject().getString("hostingName"));
-        scenarios =  response.getBody().getObject().getJSONArray("scenarios").toList();
+        scenarios = response.getBody().getObject().getJSONArray("scenarios").toList();
         terra.getGameManager().setCount(response.getBody().getObject().getInt("count"));
 
         String dateTime = response.getBody().getObject().getString("opens");
         ZonedDateTime serverTime = ZonedDateTime.now(ZoneId.of("UTC"));
-         matchTime = ZonedDateTime.of(LocalDateTime.parse(dateTime
+        matchTime = ZonedDateTime.of(LocalDateTime.parse(dateTime
                 .replace("Z", "").trim()), ZoneId.of("UTC"));
 
         Long diff = ChronoUnit.SECONDS.between(serverTime, matchTime);
@@ -77,9 +76,12 @@ public class Matchpost {
 
         scenarios.forEach(obj -> {
             try {
-                terra.scenarioManager.getScenarioByName(obj.toString()).enable();
-                }catch (Exception e){
-                terra.getServer().broadcastMessage(terra.getReference().getSecColor() + obj.toString() + " "+ terra.getReference().getPrimColor() + "Could not enable, please enable from /uhc scenarios");
+                if (obj.toString().equalsIgnoreCase("rush")){
+                }else {
+                    terra.scenarioManager.getScenarioByName(obj.toString()).enable();
+                }
+            } catch (Exception e) {
+                terra.getServer().broadcastMessage(terra.getReference().getSecColor() + obj.toString() + " " + terra.getReference().getPrimColor() + "Could not enable, please enable from /uhc scenarios");
             }
         });
 

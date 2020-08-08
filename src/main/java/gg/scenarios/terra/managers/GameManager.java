@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Team;
 
 import java.util.*;
@@ -56,10 +57,32 @@ public class GameManager {
     private boolean shears = true;
     private int whitelistOffTime = 0;
     private int scatterTimeLeft = 60;
+    private ArrayList<ItemStack> t1 = new ArrayList<>();
+    private ArrayList<ItemStack> t2 = new ArrayList<>();
+
 
     public GameManager(Terra terra) {
         this.terra = terra;
-
+        t1.add(new ItemStack(Material.FEATHER, 6));
+        t1.add(new ItemStack(Material.ARROW, 4));
+        t1.add(new ItemStack(Material.DIAMOND, 1));
+        t1.add(new ItemStack(Material.GOLD_INGOT, 2));
+        t1.add(new ItemStack(Material.BOOK, 1));
+        t1.add(new ItemStack(Material.COOKED_BEEF, 8));
+        t1.add(new ItemStack(Material.APPLE, 2));
+        t1.add(new ItemStack(Material.IRON_PICKAXE, 1));
+        t1.add(new ItemStack(Material.IRON_CHESTPLATE, 1));
+        t1.add(new ItemStack(Material.IRON_HELMET, 1));
+        t1.add(new ItemStack(Material.IRON_LEGGINGS, 1));
+        t1.add(new ItemStack(Material.IRON_BOOTS, 1));
+        t2.add(new ItemStack(Material.DIAMOND, 3));
+        t2.add(new ItemStack(Material.ARROW, 12));
+        t2.add(new ItemStack(Material.DIAMOND_AXE, 1));
+        t2.add(new ItemStack(Material.DIAMOND_PICKAXE, 1));
+        t2.add(new ItemStack(Material.GOLDEN_APPLE, 1));
+        t2.add(new ItemStack(Material.BOOK, 3));
+        t1.add(new ItemStack(Material.QUARTZ_ORE, 4));
+        t1.add(new ItemStack(Material.TNT, 3));
     }
 
     public Location findLocation() {

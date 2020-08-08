@@ -163,5 +163,6 @@ public class Terra extends JavaPlugin implements Listener {
         getCommand("lagmachine").setExecutor(new LagMachineCommand());
         getCommand("list").setExecutor(new ListCommand(this));
         getCommand("tp").setExecutor(new TpCommand(this));
+        getCommand("kings").setExecutor(new KingsCommand(this));
     }
 }

@@ -2,6 +2,7 @@ package gg.scenarios.terra.scenarios;
 
 import gg.scenarios.terra.scenarios.type.*;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -39,7 +40,12 @@ public class ScenarioManager {
         scenarios.add(new SkyHigh());
         scenarios.add(new Superheros());
         scenarios.add(new NoFall());
-
+        scenarios.add(new BetaZombies());
+        scenarios.add(new BloodDiamonds());
+        scenarios.add(new Lootcrates());
+        scenarios.add(new RandomStarterItems());
+        scenarios.add(new HypixelArrows());
+        scenarios.add(new Kings());
     }
 
 

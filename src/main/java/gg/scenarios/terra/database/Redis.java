@@ -32,7 +32,7 @@ public class Redis {
         client.getTopic("whitelist").addListener((s, o) -> {
             if (terra.getGameManager().getMatchPost() != null){
                 if (terra.getGameManager().getGameState() == GameState.LOBBY){
-                    terra.getUtils().broadcast(terra.getReference().getMain() + "&6" + o + "&7has whitelisted themselves in #prewhitelists");
+                    terra.getUtils().broadcast(terra.getReference().getMain() + "&6" + o + " &7has whitelisted themselves in #prewhitelists");
                     terra.getGameManager().getWhitelist().add(UUID.fromString(insertDashUUID(getUUID((String) o))));
                 }
             }
