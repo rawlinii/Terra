@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 
-import javax.smartcardio.TerminalFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

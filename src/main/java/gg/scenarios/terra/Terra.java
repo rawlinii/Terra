@@ -84,7 +84,7 @@ public class Terra extends JavaPlugin implements Listener {
         teams.setupTeams();
         regCommands();
         regListeners();
-        utils.setMOTD(ChatColor.translateAlternateColorCodes('&',  "               &d&lCUPID&4UHC &7» &8[&d1.8&8]\n            &bTwitter &7» &c@CupidGameFeed"));
+       // utils.setMOTD(ChatColor.translateAlternateColorCodes('&',  "               &d&lCUPID&4UHC &7» &8[&d1.8&8]\n            &bTwitter &7» &c@CupidGameFeed"));
         gameboard = new Gameboard();
         Bukkit.getScheduler().runTaskLater(this, () -> {
             joinable = true;
@@ -100,6 +100,7 @@ public class Terra extends JavaPlugin implements Listener {
         }
     }
     private void regListeners() {
+        getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new SpecListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new ScenarioInventoryEvent(), this);

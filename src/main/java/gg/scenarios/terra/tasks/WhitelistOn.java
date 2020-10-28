@@ -16,9 +16,9 @@ public class WhitelistOn {
         taskId = Bukkit.getServer().getScheduler().runTaskTimer(uhc, () -> {
 
             Bukkit.getOnlinePlayers().forEach(p -> {
-                uhc.getNms().sendTablist(p, ChatColor.RED + "" + ChatColor.BOLD + "Cupid.gg" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.RED + ChatColor.ITALIC + "@CupidGameFeed \n" +
+                uhc.getNms().sendTablist(p, ChatColor.RED + "" + ChatColor.BOLD + "Viszla.cc" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.RED + ChatColor.ITALIC + "@ViszlaUHC \n" +
                         ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
-                        ChatColor.GRAY + "Ping: " + ChatColor.RED + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n" + ChatColor.RED + "" + ChatColor.BOLD + "Cupid.gg" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "" +
+                        ChatColor.GRAY + "Ping: " + ChatColor.RED + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n" + ChatColor.RED + "" + ChatColor.BOLD + "Viszla.cc" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "" +
                         "Host: " + ChatColor.RED + uhc.getGameManager().getHostingName() + "\n" + ChatColor.GRAY + "MatchPost: " + ChatColor.RED + uhc.getGameManager().getMatchPost());
 
             });

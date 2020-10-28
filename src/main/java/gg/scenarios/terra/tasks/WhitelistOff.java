@@ -5,6 +5,7 @@ import gg.scenarios.terra.managers.Game;
 import gg.scenarios.terra.managers.TeamState;
 import gg.scenarios.terra.managers.twitter.PostTweet;
 import gg.scenarios.terra.scenarios.Scenario;
+import gg.scenarios.terra.utils.ChatUtil;
 import gg.scenarios.terra.utils.HotBarMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,9 +28,9 @@ public class WhitelistOff {
             String countDown = uhc.getUtils().convertToNice(count);
             Bukkit.getOnlinePlayers().forEach(p -> {
                 HotBarMessage.sendHotBarMessage(p, ChatColor.GRAY + "Whitelist is off in " + ChatColor.DARK_GRAY + "» " + ChatColor.GOLD + countDown);
-                uhc.getNms().sendTablist(p, ChatColor.RED + "" + ChatColor.BOLD + "Cupid.gg" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.RED + ChatColor.ITALIC + "@CupidGameFeed \n" +
+                uhc.getNms().sendTablist(p, ChatColor.RED + "" + ChatColor.BOLD + "Vizsla.cc" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.RED + ChatColor.ITALIC + "@VizslaUHC \n" +
                         ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
-                        ChatColor.GRAY + "Ping: " + ChatColor.RED + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n" + ChatColor.RED + "" + ChatColor.BOLD + "Cupid.gg" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "" +
+                        ChatColor.GRAY + "Ping: " + ChatColor.RED + ((CraftPlayer) p).getHandle().ping + "ms \n", "\n" + ChatColor.RED + "" + ChatColor.BOLD + "Vizsla.cc" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "" +
                         "Host: " + ChatColor.RED + uhc.getGameManager().getHostingName() + "\n" + ChatColor.GRAY + "MatchPost: " + ChatColor.RED +
                         uhc.getGameManager().getMatchPost());
             });
@@ -41,7 +42,7 @@ public class WhitelistOff {
                     uhc.getUtils().broadcast(tweet.getLinkUrl());
 
 
-                    Game game = new Game(uhc.getGameManager().getHostingName(), uhc.getGameManager().getCount(), uhc.getGameManager().getMatchPost(), teamSizeToString(), (uhc.getGameManager().getMatch().getMatchTime().getHour() + ":" + uhc.getGameManager().getMatch().getMatchTime().getMinute()), "na.cupid.gg",
+                    Game game = new Game(uhc.getGameManager().getHostingName(), uhc.getGameManager().getCount(), uhc.getGameManager().getMatchPost(), teamSizeToString(), (uhc.getGameManager().getMatch().getMatchTime().getHour() + ":" + uhc.getGameManager().getMatch().getMatchTime().getMinute()), "na1.Viszla.cc",
                             getScenarios());
                     uhc.getRedis().getClient().getTopic("gameServer").publishAsync(uhc.getGson().toJson(game));
                 } catch (Exception e) {
@@ -53,6 +54,8 @@ public class WhitelistOff {
             if (count == 1) {
                 uhc.getGameManager().setWhitelistEnabled(false);
                 uhc.getUtils().broadcast(ChatColor.DARK_GRAY + "the whitelist has been " + ChatColor.DARK_RED + "disabled.");
+                String msg = ChatUtil.format("&8[&5Alert&8] &f" + "&c&lWhitelist is off for NA1 use /server nauhc");
+                Terra.getInstance().getRedis().getClient().getTopic("global").publishAsync(msg);
 
             }
             if (count == -1) {
@@ -62,6 +65,7 @@ public class WhitelistOff {
                 } else {
                     new WhitelistOn(420);
                 }
+
                 stopScheduler();
             }
         }, 0L, 20L).getTaskId();

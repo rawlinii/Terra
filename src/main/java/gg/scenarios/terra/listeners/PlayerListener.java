@@ -331,9 +331,9 @@ public class PlayerListener implements Listener {
             } else {
                 matchPost = gameManager.getMatchPost();
             }
-            terra.getNms().sendTablist(player, ChatColor.RED + "" + ChatColor.BOLD + "Cupid.GG" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.RED + ChatColor.ITALIC + "@CupidGameFeed \n" +
+            terra.getNms().sendTablist(player, ChatColor.RED + "" + ChatColor.BOLD + "Viszla.cc" + ChatColor.RESET + ChatColor.GRAY + " - " + ChatColor.RED + ChatColor.ITALIC + "@ViszlaUHC \n" +
                     ChatColor.GRAY + "Follow our UHC calender on twitter \n" +
-                    ChatColor.GRAY + "Ping: " + ChatColor.RED + ((CraftPlayer) player).getHandle().ping + "ms \n", "\n" + ChatColor.RED + "" + ChatColor.BOLD + "Cupid.gg" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
+                    ChatColor.GRAY + "Ping: " + ChatColor.RED + ((CraftPlayer) player).getHandle().ping + "ms \n", "\n" + ChatColor.RED + "" + ChatColor.BOLD + "Viszla.cc" + ChatColor.RESET + ChatColor.GRAY + " \n " + ChatColor.GRAY + "MatchPost: " + ChatColor.GOLD +
                     "No Match Scheduled");
 
             if (gameManager.getGameState().equals(GameState.STARTED)) {

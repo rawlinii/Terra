@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 public class Redis {
 
-    private RedissonClient client;
+    @Getter private final RedissonClient client = Redisson.create();
 
     private Terra terra;
 
@@ -23,11 +23,6 @@ public class Redis {
     public Redis (Terra terra) {
         this.terra = terra;
 
-        Config config = new Config();
-        config.useSingleServer().setAddress("157.245.227.156:6379");
-        config.useSingleServer().setPassword("Mondosbeach1");
-
-        this.client = Redisson.create(config);
 
         client.getTopic("whitelist").addListener((s, o) -> {
             if (terra.getGameManager().getMatchPost() != null){
